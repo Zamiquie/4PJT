@@ -1,0 +1,16 @@
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\bin\Debug\netcoreapp2.2\appsettings.Development.json
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\bin\Debug\netcoreapp2.2\appsettings.json
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\bin\Debug\netcoreapp2.2\SupMagasin.deps.json
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\bin\Debug\netcoreapp2.2\SupMagasin.runtimeconfig.json
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\bin\Debug\netcoreapp2.2\SupMagasin.runtimeconfig.dev.json
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\bin\Debug\netcoreapp2.2\SupMagasin.dll
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\obj\Debug\netcoreapp2.2\SupMagasin.csprojAssemblyReference.cache
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\obj\Debug\netcoreapp2.2\SupMagasin.RazorAssemblyInfo.cache
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\obj\Debug\netcoreapp2.2\SupMagasin.RazorAssemblyInfo.cs
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\obj\Debug\netcoreapp2.2\SupMagasin.AssemblyInfoInputs.cache
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\obj\Debug\netcoreapp2.2\SupMagasin.AssemblyInfo.cs
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\obj\Debug\netcoreapp2.2\SupMagasin.RazorTargetAssemblyInfo.cache
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\bin\Debug\netcoreapp2.2\SupMagasin.pdb
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\obj\Debug\netcoreapp2.2\SupMagasin.dll
+E:\SUPINFO\4eme_Année\4PROJ\SupMagasin\SupMagasin\obj\Debug\netcoreapp2.2\SupMagasin.pdb

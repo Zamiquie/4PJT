@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,33 +11,42 @@ namespace SupMagasin.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class CategorieController : ControllerBase
     {
-        // GET:/User
+        public List<Categorie> Categorieers { get; set; } = new List<Categorie>();
+
+        public CategorieController()
+        {
+            for (int x = 0; x < 10; x++)
+            {
+                Categorieers.Add(new Categorie()
+                {
+                    
+                });
+            }
+        }
+
+        // GET: Categorie
         [HttpGet]
         public string Get()
         {
-
-            Customer user = new Customer();
-
-            return JsonConvert.SerializeObject(user);
-
+            return JsonConvert.SerializeObject(Categorieers);
         }
 
-        // GET: User/5
-        [HttpGet("{id}", Name = "Get")]
+        // GET: Categorie/5
+        [HttpGet("{id}", Name = "GetCategorie")]
         public string Get(int id)
         {
-            return "value";
+            return JsonConvert.SerializeObject(Categorieers[id]);
         }
 
-        // POST:User
+        // POST: Categorie
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT: User/5
+        // PUT: Categorie/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\SUPINFO\\4eme_Année\\4PROJ\\SupMagasin\\SupMagasin\\SupMagasin.csproj": {}
+    "E:\\SUPINFO\\4eme_Année\\4PROJ\\SupMag\\4PJT\\SupMagasin\\SupMagasin.csproj": {}
   },
   "projects": {
-    "E:\\SUPINFO\\4eme_Année\\4PROJ\\SupMagasin\\SupMagasin\\SupMagasin.csproj": {
+    "E:\\SUPINFO\\4eme_Année\\4PROJ\\SupMag\\4PJT\\SupMagasin\\SupMagasin.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\SUPINFO\\4eme_Année\\4PROJ\\SupMagasin\\SupMagasin\\SupMagasin.csproj",
+        "projectUniqueName": "E:\\SUPINFO\\4eme_Année\\4PROJ\\SupMag\\4PJT\\SupMagasin\\SupMagasin.csproj",
         "projectName": "SupMagasin",
-        "projectPath": "E:\\SUPINFO\\4eme_Année\\4PROJ\\SupMagasin\\SupMagasin\\SupMagasin.csproj",
+        "projectPath": "E:\\SUPINFO\\4eme_Année\\4PROJ\\SupMag\\4PJT\\SupMagasin\\SupMagasin.csproj",
         "packagesPath": "C:\\Users\\ZamiquiePort\\.nuget\\packages\\",
-        "outputPath": "E:\\SUPINFO\\4eme_Année\\4PROJ\\SupMagasin\\SupMagasin\\obj\\",
+        "outputPath": "E:\\SUPINFO\\4eme_Année\\4PROJ\\SupMag\\4PJT\\SupMagasin\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -63,6 +63,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[2.2.4, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.10.1, )"
             }
           },
           "imports": [

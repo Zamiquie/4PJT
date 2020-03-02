@@ -1,14 +1,14 @@
 # 4PJT
 Projet de fin d'année
 
-## Le 03/02/2020
+## Le 03/02/2020 by Zamiquie
 Creation outils :
 - creation de class json en console
 - creation de l'api
 - creation de la DAL
 - Racordement Route Customer pour ajout et Get/Get(id)
 
-## Le 02/03/2020 
+## Le 02/03/2020 by Zamiquie
 - Rajout des routes : 
           - Produit 
           - Employes

@@ -7,3 +7,12 @@ Creation outils :
 - creation de l'api
 - creation de la DAL
 - Racordement Route Customer pour ajout et Get/Get(id)
+
+## Le 02/03/2020 
+- Rajout des routes : 
+          - Produit 
+          - Employes
+          - Magasin 
+          - User
+          - Bornes
+- Mise en place de la documentation

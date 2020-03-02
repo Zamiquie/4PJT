@@ -9,8 +9,8 @@ namespace SupMagasin.Model
     public class Customer
     {
         [BsonId]
-        [BsonRepresentation(MongoDB.Bson.BsonType.Int32)]
-        public int Id { get; set; }
+        [BsonRepresentation(MongoDB.Bson.BsonType.String)]
+        public string Id { get; set; }
         [BsonElement("Sexe")]
         public Sexe Sexe { get; set; }
         [BsonElement("Name")]

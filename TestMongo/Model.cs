@@ -20,10 +20,10 @@ namespace TestMongo
         [BsonElement("Price")]
         public float Price { get; set; }
         [BsonElement("list_Adress")]
-        public string Adress { get; set; }
+        public List<Models> Adress { get; set; }
 
 
-        public Model(string id,string name,string firstname,float price,string adresses)
+        public Model(string id,string name,string firstname,float price,List<Models> adresses)
         {
             ID = id;
             Name = name;

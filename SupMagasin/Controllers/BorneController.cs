@@ -4,60 +4,80 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using Newtonsoft.Json;
+using SupMagasin.Dal;
 using SupMagasin.Model;
 
-namespace SupBorne.Controllers
+namespace SupMagasin.Controllers
 {
     [Route("[controller]")]
     [ApiController]
     public class BorneController : ControllerBase
     {
-        public List<Borne> Bornes { get; set; } = new List<Borne>();
+        Dal_Borne dal { get; set; }
 
         public BorneController()
         {
-            for (int x = 0; x < 10; x++)
-            {
-                Bornes.Add(new Borne()
-                {
-                    ID = x,
-                    Position = "Borne_" + x.ToString(),
-                    EtatBorne = EtatBorne.EnStock
-                });
-            }
+            dal = new Dal_Borne();
         }
-
-        // GET: Borne
+        #region GET
+        // GET: Borne/All
+        [Route("All")]
         [HttpGet]
-        public string Get()
+        public async Task<string> GetAsync()
         {
-            return JsonConvert.SerializeObject(Bornes);
+            var allBorne = await dal.GetAllBorne();
+            return allBorne;
         }
-
-        // GET: Borne/5
-        [HttpGet("{id}", Name = "GetBorne")]
-        public string Get(int id)
+        
+        // GET: Borne/id
+        [HttpGet("{id}", Name = "idBorne")]
+        public async Task<string> Get(string id)
         {
-            return JsonConvert.SerializeObject(Bornes[id]);
+            return await dal.GetBorneByID(id);
         }
+        #endregion
 
-        // POST: Borne
+        #region POST
+        // POST: Borne/addBorne
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("addBorne")]
+        public void Post([FromBody] Borne value)
         {
+            _ = dal.AddBorneAsync(value);   
+        }
+        #endregion
+
+        #region PUT
+        // PUT: Borne/updateBorne
+        [Route("updateBorne")]
+        [HttpPut]
+        public Task<string> Put([FromBody] Borne value)
+        {
+            return dal.UpdateBorne(value);
         }
 
-        // PUT: Borne/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        #endregion
+
+        #region DELETE
+        // DELETE: Borne/DeleteOnly/id
+        [Route("DeleteOnly/{id}")] 
+        [HttpDelete("{id}",Name = "idDeleteBorne")]
+        public Task<string> Delete(string id)
         {
+            return dal.RemoveBorne(id);
         }
 
-        // DELETE: Borne/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        //DELETE : Borne/DeleteMany
+        [Route("DeleteMany")]
+        [HttpDelete]
+        public Task<string> DeleteMany([FromBody] List<Borne> Bornes)
         {
+            return dal.RemoveLotBorne(Bornes);
         }
+        #endregion
+
+
     }
 }

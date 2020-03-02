@@ -26,4 +26,12 @@ namespace SupMagasin.Model
         Moyen = 2,
         Haut = 3
     }
+
+
+    public enum Categorie
+    {
+        Alimentaire = 1, 
+        NewTech = 2, 
+        Mobilier = 3
+    }
 }

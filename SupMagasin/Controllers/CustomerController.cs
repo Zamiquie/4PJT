@@ -21,7 +21,9 @@ namespace SupMagasin.Controllers
         {
             dal = new DalCustomer();
         }
-        // GET: Customer
+        #region GET
+        // GET: Customer/All
+        [Route("All")]
         [HttpGet]
         public async Task<string> GetAsync()
         {
@@ -31,31 +33,50 @@ namespace SupMagasin.Controllers
         
         // GET: Customer/id
         [HttpGet("{id}", Name = "Get")]
-        public async Task<string> Get(int id)
+        public async Task<string> Get(string id)
         {
             return await dal.GetCustomerByID(id);
         }
+        #endregion
 
+        #region POST
         // POST: Customer/add
         [HttpPost]
-        [Route("add")]
+        [Route("addCustomer")]
         public void Post([FromBody] Customer value)
         {
-            DalCustomer dal = new DalCustomer();
-            _ = dal.AddCustomerAsync(value);
-            
+            _ = dal.AddCustomerAsync(value);   
+        }
+        #endregion
+
+        #region PUT
+        // PUT: Customer/updateCustomer
+        [Route("updateCustomer")]
+        [HttpPut]
+        public Task<string> Put([FromBody] Customer value)
+        {
+            return dal.UpdateCustomer(value);
         }
 
-        // PUT: api/Customer/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        #endregion
+
+        #region DELETE
+        // DELETE: Customer/DeleteOnly/id
+        [Route("DeleteOnly/{id}")] 
+        [HttpDelete("{id}",Name = "idDelete")]
+        public Task<string> Delete(string id)
         {
+            return dal.RemoveCustomer(id);
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        //DELETE : Customer/DeleteMany
+        [Route("DeleteMany")]
+        [HttpDelete]
+        public Task<string> DeleteMany([FromBody] List<Customer> customers)
         {
+            return dal.RemoveLotCustomer(customers);
         }
+        #endregion
+
     }
 }

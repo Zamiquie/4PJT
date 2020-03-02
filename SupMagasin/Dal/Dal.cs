@@ -71,11 +71,12 @@ namespace SupMagasin.Dal
         }
 
         //Delete One element
-        protected async Task<string> DeleteEntry(T deleteEntris)
+        protected async Task<string> DeleteEntry(string deleteEntris)
         {
             try
             {
-                //await Collection.DeleteOne<T>(deleteEntris);
+                var x = await Collection.DeleteOneAsync(Builders<T>.Filter.Eq("_id",deleteEntris));
+                if (x.DeletedCount == 0) { return new string("Not element found").ToJson(); }//si auxun elem supprimer 
                 return true.ToJson();
             }
             catch (Exception e)
@@ -84,7 +85,6 @@ namespace SupMagasin.Dal
                 return false.ToJson();
 
             }
-
 
         }
 

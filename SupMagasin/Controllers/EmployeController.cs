@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using SupMagasin.Dal;
 using SupMagasin.Model;
 
 namespace SupMagasin.Controllers
@@ -13,65 +14,70 @@ namespace SupMagasin.Controllers
     [ApiController]
     public class EmployeController : ControllerBase
     {
-        public List<Employe> Employes { get; set; } = new List<Employe>();
+        public Dal_Employe dal { get; set; }
 
         public EmployeController()
         {
-            for (int x = 0; x < 10; x++)
-            {
-                Employes.Add(new Employe()
-                {
-                    ID = x,
-                    Nom = "Esclave" + x.ToString(),
-                    Prenom = "Slave" + x.ToString()
-                });
-            }
-
+            dal = new Dal_Employe();
         }
 
-        // GET: Employe
+        #region Get
+        // GET: Employe/AllEmploye
+        [Route("All")]
         [HttpGet]
-        public string Get()
+        public async Task<string> GetAsync()
         {
 
-            return JsonConvert.SerializeObject(Employes); 
-            
+            var allEmploye = await dal.GetAllEmploye();
+            return allEmploye;
         }
 
         // GET: Employe/5
-        [HttpGet("{id}", Name = "id")]
-        public string Get(int id)
+        [HttpGet("{id}", Name = "idEmploye")]
+        public async Task<string> GetAsync(string id)
         {
-           return JsonConvert.SerializeObject(Employes[id]);
+            var Employe = await dal.GetEmployeByID(id);
+            return Employe;
         }
+        #endregion
 
-        // POST: api/Employe
+        #region POST
+        // POST: Employe/addEmploye
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("addEmploye")]
+        public void Post([FromBody] Employe newEmploye)
         {
-        }
 
-        // PUT: api/Employe/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+            _ = dal.AddEmployeAsync(newEmploye);
+
+        }
+        #endregion
+
+        #region PUT
+        // PUT: Employe/updateEmploye
+        [Route("updateEmploye")]
+        [HttpPut("")]
+        public Task<string> Put([FromBody] Employe value)
         {
+            return dal.UpdateEmploye(value);
         }
+        #endregion
 
-        // DELETE: Employe/5
+        #region DELETE
+        // DELETE: Employe/DeleteOnly/5
+        [Route("DeleteOnlyEmploye/{id}")]
         [HttpDelete("{id}")]
-        public bool Delete(int id)
+        public Task<string> Delete(string id)
         {
-            try
-            {
-                Employes.RemoveAt(id);
-                return true;
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-
-                return false;
-            }
-   
+            return dal.RemoveEmploye(id);
         }
+
+        [Route("DeleteManyEmploye")]
+        [HttpDelete]
+        public async Task<string> DeleteMany([FromBody] List<Employe> employes)
+        {
+            return await dal.RemoveLotEmploye(employes);
+        }
+        #endregion
     }
 }

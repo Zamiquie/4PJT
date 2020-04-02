@@ -1,0 +1,58 @@
+BDD : architecture.
+Monter un MongoDB sur un serveur.
+Faire les modifications selon les besoins.
+
+Créer une table "Sanctions" dans laquelle mettre la date(date) ainsi que la gravité (int(4))
+et un commentaire (string)
+1 :avertissement
+2 : blame
+3 : mise a pied
+4 : faute grave/faute lourde
+
+Téléphone
+ID
+MAC
+Marque
+ID_User
+Rajouter les téléphones par UT.
+
+Nb de clients : 5-10
+
+Voir pour chiffrer les mots de passes et les images.
+Utiliser la librairie : Zeroformatter
+
+INFRA : Gérer 2 rasberry
+
+Pas de WiFi, câbler rasb : bornes d'entrées.
+
+Table RAYON : 
+faire un lot de produits, et la quantité de ces produits présent dans les rayons.
+
+Table PRODUIT
+Ajouter : en vente (boolean) afin d'avoir un historique des produits qui ont étés vendus.
+
+Back :
+Voir pour la génération des QRCodes
+Réception des produits : poid à l'unité
+
+INFRA : 
+
+Rasberry : 2
+Serveur central : Back ,Front, BDD, Fichers, AD, Bornes(câblées au serveur central)
+Serveur Backup : 
+
+Serveur Physique 
+
+Rasb connectés en filaire aux serveur
+
+IronPDF --> Convertir des fichiers en PDF
+
+
+
+
+
+
+
+
+
+

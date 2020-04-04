@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace SupMagasin
 {
@@ -22,14 +18,44 @@ namespace SupMagasin
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            
+
+            const string corsURLKEYS = "Security:Cors:Url";
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(option =>
+                {
+                    option.RequireHttpsMetadata = false; // seulement le HTTPS
+                    option.SaveToken = true; // On ssave le token
+                    option.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true, // verification du issuer
+                        ValidateAudience = true, // verification de l'Audiance 
+                        ValidateLifetime = true, // Verification de la durée de vie
+                        ValidateIssuerSigningKey = true, // vérification de al clé
+                        ValidIssuer = Configuration["jwt:issuer"], // qui est l'emmeteur ?
+                        ValidAudience = Configuration["jwt:audiance"], //  qui est le recepteur ?
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["jwt:key"])) // quel est la clé ?
+                    };
+                });
+
+            services.AddCors(option =>
+            {
+                string url = Configuration[corsURLKEYS];
+                option.AddPolicy("AllowSpecificOrigin",
+                           builder => builder.WithOrigins(url)
+                                              .AllowCredentials());
+            });
+
+            services.AddSwaggerGen(c =>
+           {
+               c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "ApiSupMagasin",Version = "v1"});
+
+           });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -38,12 +64,17 @@ namespace SupMagasin
             }
             else
             {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseAuthentication();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api SupMagasin v1");
+            });
         }
     }
 }

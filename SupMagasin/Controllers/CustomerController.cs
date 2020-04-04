@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
@@ -13,6 +15,7 @@ namespace SupMagasin.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CustomerController : ControllerBase
     {
         DalCustomer dal { get; set; }
@@ -61,20 +64,17 @@ namespace SupMagasin.Controllers
         #endregion
 
         #region DELETE
-        // DELETE: Customer/DeleteOnly/id
-        [Route("DeleteOnly/{id}")] 
-        [HttpDelete("{id}",Name = "idDelete")]
-        public Task<string> Delete(string id)
-        {
-            return dal.RemoveCustomer(id);
-        }
-
-        //DELETE : Customer/DeleteMany
-        [Route("DeleteMany")]
+        //DELETE : Customer/Delete
+        [Route("Delete")]
         [HttpDelete]
-        public Task<string> DeleteMany([FromBody] List<Customer> customers)
+        public async Task<string> DeleteMany([FromBody] List<Customer> customers)
         {
-            return dal.RemoveLotCustomer(customers);
+            if (customers.Count == 1)
+            {
+                return await dal.RemoveCustomer(customers[0].Id);
+            }
+            
+            return await dal.RemoveLotCustomer(customers);
         }
         #endregion
 

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -12,6 +14,7 @@ namespace SupMagasin.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class EmployeController : ControllerBase
     {
         public Dal_Employe dal { get; set; }
@@ -56,7 +59,7 @@ namespace SupMagasin.Controllers
         #region PUT
         // PUT: Employe/updateEmploye
         [Route("updateEmploye")]
-        [HttpPut("")]
+        [HttpPut]
         public Task<string> Put([FromBody] Employe value)
         {
             return dal.UpdateEmploye(value);
@@ -64,18 +67,14 @@ namespace SupMagasin.Controllers
         #endregion
 
         #region DELETE
-        // DELETE: Employe/DeleteOnly/5
-        [Route("DeleteOnlyEmploye/{id}")]
-        [HttpDelete("{id}")]
-        public Task<string> Delete(string id)
-        {
-            return dal.RemoveEmploye(id);
-        }
-
-        [Route("DeleteManyEmploye")]
+        [Route("Delete")]
         [HttpDelete]
         public async Task<string> DeleteMany([FromBody] List<Employe> employes)
         {
+            if (employes.Count == 1)
+            {
+                return await dal.RemoveEmploye(employes[0].ID);
+            }
             return await dal.RemoveLotEmploye(employes);
         }
         #endregion

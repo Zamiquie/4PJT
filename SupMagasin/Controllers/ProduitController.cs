@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SupMagasin.Dal;
 using SupMagasin.Model;
@@ -9,6 +11,7 @@ namespace SupMagasin.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ProduitController : ControllerBase
     {
         public Dal_Produit dal { get; set; }
@@ -53,7 +56,7 @@ namespace SupMagasin.Controllers
         #region PUT
         // PUT: Produit/updateProduit
         [Route("updateProduit")]
-        [HttpPut("")]
+        [HttpPut]
         public Task<string> Put([FromBody] Produit value)
         {
             return dal.UpdateProduit(value);
@@ -61,18 +64,14 @@ namespace SupMagasin.Controllers
         #endregion
 
         #region DELETE
-        // DELETE: Produit/DeleteOnly/5
-        [Route("DeleteOnlyProduit/{id}")]
-        [HttpDelete("{id}")]
-        public Task<string> Delete(string id)
-        {
-            return dal.RemoveProduit(id);
-        }
-
-        [Route("DeleteManyProduits")]
+        [Route("DeleteProd")]
         [HttpDelete]
         public async Task<string> DeleteMany([FromBody] List<Produit> Produits)
         {
+            if(Produits.Count == 1)
+            {
+                return await dal.RemoveProduit(Produits[0].ID);
+            }
             return await dal.RemoveLotProduit(Produits);
         }
         #endregion

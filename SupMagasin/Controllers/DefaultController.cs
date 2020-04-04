@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace SupMagasin.Controllers
 {
     [Route("/")]
+  
     public class DefaultController : Controller
     {
         // GET: Default
+        [HttpGet]
         public ActionResult Index()
         {
             return View("Index");

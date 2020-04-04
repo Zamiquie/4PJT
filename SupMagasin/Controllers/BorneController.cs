@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
@@ -13,7 +15,9 @@ namespace SupMagasin.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BorneController : ControllerBase
+
     {
         Dal_Borne dal { get; set; }
 
@@ -62,18 +66,22 @@ namespace SupMagasin.Controllers
 
         #region DELETE
         // DELETE: Borne/DeleteOnly/id
-        [Route("DeleteOnly/{id}")] 
-        [HttpDelete("{id}",Name = "idDeleteBorne")]
-        public Task<string> Delete(string id)
+        [Route("DeleteOnly")] 
+        [HttpDelete]
+        public Task<string> Delete([FromBody] Borne borne)
         {
-            return dal.RemoveBorne(id);
+            return dal.RemoveBorne(borne.ID);
         }
 
         //DELETE : Borne/DeleteMany
-        [Route("DeleteMany")]
+        [Route("Delete")]
         [HttpDelete]
         public Task<string> DeleteMany([FromBody] List<Borne> Bornes)
         {
+            if (Bornes.Count == 1)
+            {
+                return dal.RemoveBorne(Bornes[0].ID);
+            }
             return dal.RemoveLotBorne(Bornes);
         }
         #endregion

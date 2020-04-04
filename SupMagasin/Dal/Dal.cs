@@ -8,12 +8,16 @@ using System.Threading.Tasks;
 
 namespace SupMagasin.Dal
 {
+    /*
+     * Class Abstraite servant de base au autre. 
+     * Elle est remplis de de type généric afin de prévoir de nouvelle tables pour plus tard.
+     */
     public abstract class Dal<T>
     {
         protected MongoClient Client { get; set; }
         protected IMongoDatabase Database { get; set; }
         protected IMongoCollection<T> Collection { get; set; }
-
+        
         #region Constructeur
         public Dal(string stringConnection,string dbName, string colletionName)
         {
@@ -103,7 +107,6 @@ namespace SupMagasin.Dal
 
             }
         }
-
         //Query All Element
         protected async Task<string> QueryAllElement()
         {

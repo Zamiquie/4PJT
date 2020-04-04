@@ -16,3 +16,12 @@ Creation outils :
           - User
           - Bornes
 - Mise en place de la documentation
+
+## Le 04/04/2020 by Zamiquie :
+
+- Ajout de la doc api sur SWager
+- Creation de la document en word
+- Ajout des JWT pour consultation de l'api
+- Supression des inputs simples sur tous les déletes
+# A faire :
+-- correction dans l'abstract class sur la supression des objects

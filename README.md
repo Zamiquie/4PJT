@@ -23,5 +23,5 @@ Creation outils :
 - Creation de la document en word
 - Ajout des JWT pour consultation de l'api
 - Supression des inputs simples sur tous les déletes
-# A faire :
+### A faire :
 -- correction dans l'abstract class sur la supression des objects

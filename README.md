@@ -23,5 +23,16 @@ Creation outils :
 - Creation de la document en word
 - Ajout des JWT pour consultation de l'api
 - Supression des inputs simples sur tous les déletes
-### A faire :
--- correction dans l'abstract class sur la supression des objects
+
+## Le 12/04/2020 by Zamiquie : 
+-Refonte des Dals (Data Access Layer)
+-Correction des Bugs dans la dalMere
+-Ajout de la creation et ajout de data dès le lancement de L'Api
+
+### A FAIRE 
+- refonte des Routes pour mieux epouser les Dals
+- Creation de Lib de Generation des Données
+- Mise En prod de l'Api 
+
+
+

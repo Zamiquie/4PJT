@@ -1,5 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
+using SupMagasin.Model;
+using SupMagasin.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +12,7 @@ namespace SupMagasin.Dal
 {
     /*
      * Class Abstraite servant de base au autre. 
-     * Elle est remplis de de type généric afin de prévoir de nouvelle tables pour plus tard.
+     * Elle est remplis de type généric afin de prévoir de nouvelle tables.
      */
     public abstract class Dal<T>
     {
@@ -21,26 +23,35 @@ namespace SupMagasin.Dal
         #region Constructeur
         public Dal(string stringConnection,string dbName, string colletionName)
         {
-            Client = new MongoClient();
+            Client = new MongoClient(stringConnection);
             Database = Client.GetDatabase(dbName);
             Collection = Database.GetCollection<T>(colletionName);
         }
 
         public Dal(string dbName, string colletionName)
         {
-            Client = new MongoClient();
+            Client = new MongoClient(ConnectionMongo.Desktop);
             Database = Client.GetDatabase(dbName);
             Collection = Database.GetCollection<T>(colletionName);
         }
 
         public Dal(string collectionName)
         {
-            Client = new MongoClient();
-            Database = Client.GetDatabase("IaShop");
+            Client = new MongoClient(ConnectionMongo.Desktop);
+            Database = Client.GetDatabase("SupMagasin");
+            //si on debug on supprime la collection
+            if (Debugger.IsAttached)
+            {
+                Database.DropCollection(collectionName);
+            }
             Collection = Database.GetCollection<T>(collectionName);
+            
+            
+     
         }
         #endregion
 
+        #region Insert
         //Insert One element
         protected async Task<string> AddElement(T newEntri)
         {
@@ -51,7 +62,7 @@ namespace SupMagasin.Dal
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
+                new WriteLog(TypeLog.MangoDb).WriteFile(e.Message);
                 return false.ToJson();
 
             }
@@ -68,12 +79,49 @@ namespace SupMagasin.Dal
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
+                new WriteLog(TypeLog.MangoDb).WriteFile(e.Message);
                 return false.ToJson();
 
             }
         }
 
+        #endregion
+
+        #region Query
+        //Query All Element
+        protected async Task<string> QueryAllElement()
+        {
+            try
+            {
+                var list = Collection.Find(_ => true).ToList();
+                return list.ToJson();
+            }
+            catch (Exception e)
+            {
+                new WriteLog(TypeLog.MangoDb).WriteFile(e.Message);
+                return e.Message.ToJson();
+
+            }
+        }
+
+        //Query Element By Id (a verifier)
+        protected async Task<List<T>> QueryElementById()
+        {
+            try
+            {
+                var list = Collection.Find<T>(_ => true).ToList();
+                return list;
+            }
+            catch (Exception e)
+            {
+                new WriteLog(TypeLog.MangoDb).WriteFile(e.Message);
+                return new List<T>();
+
+            }
+        }
+        #endregion
+
+        #region Delete
         //Delete One element
         protected async Task<string> DeleteEntry(string deleteEntris)
         {
@@ -85,7 +133,7 @@ namespace SupMagasin.Dal
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
+                new WriteLog(TypeLog.MangoDb).WriteFile(e.Message);
                 return false.ToJson();
 
             }
@@ -102,57 +150,37 @@ namespace SupMagasin.Dal
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
+                new WriteLog(TypeLog.MangoDb).WriteFile(e.Message);
                 return false.ToJson();
 
             }
         }
-        //Query All Element
-        protected async Task<string> QueryAllElement()
-        {
-            try
-            {
-                var list =  Collection.Find(_ => true).ToList();
-                return list.ToJson();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-                return e.Message.ToJson();
+        #endregion
 
-            }
-        }
-
-        //Query Element By Id (a verifier)
-        protected async Task<List<T>> QueryElementById()
-        {
-            try
-            {
-                var list = Collection.Find<T>(_ =>true).ToList();
-                return list;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-                return new List<T>();
-
-            }
-        }
-
+        #region Update
         //Query Update 
-        protected async Task<string> UdpateElement(string ID,T element)
+        protected async Task<string> UdpateElement(string id,T element)
         {
             try
             {
-                var list = await Collection.FindAsync(x => true);
-                return list.ToJson();
+                var filter = Builders<T>.Filter.Eq("_id", id);
+                var replaceElement = await Collection.ReplaceOneAsync(filter, element);
+                if (replaceElement.IsModifiedCountAvailable) 
+                {
+                    return true.ToJson();
+                }
+                else
+                {
+                    return new string("Error while update!! Try Again").ToJson();
+                }
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
+                new WriteLog(TypeLog.MangoDb).WriteFile(e.Message);
                 return e.Message.ToJson();
             }
         }
+        #endregion
 
     }
 }

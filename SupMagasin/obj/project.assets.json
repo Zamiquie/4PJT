@@ -2877,7 +2877,7 @@
           }
         }
       },
-      "MongoDB.Bson/2.10.1": {
+      "MongoDB.Bson/2.10.3": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.1",
@@ -8394,10 +8394,10 @@
         "version.txt"
       ]
     },
-    "MongoDB.Bson/2.10.1": {
-      "sha512": "BTQKxYytJL4CZob76qVAVTM51AryI/wE3JkASRtWUYCUSEJVMBGBVtzV5O9AUo6Tjrn8qQXvtGVPfACb6x53Kw==",
+    "MongoDB.Bson/2.10.3": {
+      "sha512": "UT6w7vsiXlCH7mABxj/NuaGR0KWfXIW5zP5RHW16JrviiygSoEb6fEUhs1QgrjdcNHP+gns1/T9Sfqi4KUPPew==",
       "type": "package",
-      "path": "mongodb.bson/2.10.1",
+      "path": "mongodb.bson/2.10.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -8406,7 +8406,7 @@
         "lib/net452/MongoDB.Bson.xml",
         "lib/netstandard1.5/MongoDB.Bson.dll",
         "lib/netstandard1.5/MongoDB.Bson.xml",
-        "mongodb.bson.2.10.1.nupkg.sha512",
+        "mongodb.bson.2.10.3.nupkg.sha512",
         "mongodb.bson.nuspec"
       ]
     },
@@ -13946,6 +13946,7 @@
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.2.4",
+      "MongoDB.Bson >= 2.10.3",
       "MongoDB.Driver >= 2.10.1",
       "Swashbuckle.AspNetCore >= 5.3.1",
       "Swashbuckle.AspNetCore.Swagger >= 5.3.1",
@@ -14022,6 +14023,10 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[2.2.4, )"
+          },
+          "MongoDB.Bson": {
+            "target": "Package",
+            "version": "[2.10.3, )"
           },
           "MongoDB.Driver": {
             "target": "Package",

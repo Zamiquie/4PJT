@@ -14,11 +14,11 @@ namespace SupMagasin.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ProduitController : ControllerBase
     {
-        public Dal_Produit dal { get; set; }
+        public DalProduit dal { get; set; }
 
         public ProduitController()
         {
-            dal = new Dal_Produit();
+            dal = new DalProduit();
         }
 
         #region Get

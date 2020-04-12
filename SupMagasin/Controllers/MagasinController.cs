@@ -17,11 +17,11 @@ namespace SupMagasin.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class MagasinController : ControllerBase
     {
-        public Dal_Magasin dal { get; set; }
+        public DalShop dal { get; set; }
 
         public MagasinController()
         {
-            dal = new Dal_Magasin();
+            dal = new DalShop();
         }
 
         #region Get
@@ -47,7 +47,7 @@ namespace SupMagasin.Controllers
         // POST: Magasin/addMagasin
         [HttpPost]
         [Route("addMagasin")]
-        public void Post([FromBody] Magasin newMagasin)
+        public void Post([FromBody] Shop newMagasin)
         {
 
             _ = dal.AddMagasinAsync(newMagasin);
@@ -59,7 +59,7 @@ namespace SupMagasin.Controllers
         // PUT: Magasin/updateMagasin
         [Route("updateMagasin")]
         [HttpPut]
-        public Task<string> Put([FromBody] Magasin value)
+        public Task<string> Put([FromBody] Shop value)
         {
             return dal.UpdateMagasin(value);
         }
@@ -69,7 +69,7 @@ namespace SupMagasin.Controllers
      
         [Route("Delete")]
         [HttpDelete]
-        public async Task<string> DeleteMany([FromBody] List<Magasin> Magasins)
+        public async Task<string> DeleteMany([FromBody] List<Shop> Magasins)
         {
             if (Magasins.Count == 1)
             {

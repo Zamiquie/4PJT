@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using SupMagasin.Model.CustomerModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace SupMagasin.Model
         public string Id { get; set; }
         [BsonElement("Sexe")]
         public Sexe Sexe { get; set; }
+        [BsonElement("Email")]
+        public string Email { get; set; }
         [BsonElement("Name")]
         public string Name { get; set; }
         [BsonElement("FirstName")]
@@ -25,20 +28,19 @@ namespace SupMagasin.Model
         public string Postal_Code { get; set; }
         [BsonElement("City")]
         public string City { get; set; }
+        [BsonElement("RIB")]
+        public List<BanqDataModel> BanqData { get; set; }
+        [BsonElement("Phones")]
+        public List<PhoneModel> Phones { get; set; }
+        [BsonElement("Photo")]
+        public byte[] Photo { get; set; }
         [BsonElement("Last_Time")]
         public DateTime Last_Time { get; set; }
         [BsonElement("AnnualFrequentation")]
         public int AnnualFrequentation { get; set; }
         [BsonElement("PanierMoyen")]
         public float PanierMoyen { get; set; }
-        [BsonElement("RIB")]
-        public string RIB { get; set; }
-        [BsonElement("TempsMoyen")]
-        public DateTime TempsMoyen { get; set; }
-        [BsonElement("Photo")]
-        public byte[] Photo { get; set; }
-        [BsonElement("Email")]
-        public string Email { get; set; }
 
     }
+
 }

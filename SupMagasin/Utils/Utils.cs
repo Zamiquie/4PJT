@@ -43,4 +43,22 @@ namespace SupMagasin.Model
         public static String Serveur { get { return "nothing"; } }
         
     }
+
+
+
+    public enum Sanction
+    {
+        Avertissement = 1,
+        Blame = 2,
+        MiseaPied = 3,
+        FauteGrave = 4,
+        FauteLourde = 5
+    }
+
+    public enum TypeLog
+    {
+        MangoDb = 1,
+        AspNet = 2,
+        Other = 3
+    }
 }

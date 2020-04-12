@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Driver;
+using SupMagasin.Model.CustomerModel;
+using SupMagasin.Utils;
 
 namespace SupMagasin.Dal
 {
@@ -14,26 +17,46 @@ namespace SupMagasin.Dal
         {
         }
 
+
+        //region d'insertion des données
+        #region Insert
+
+        // On element
         public async Task<string> AddCustomerAsync(Customer newCustomer)
         {
+            newCustomer.Id = GenerateId(newCustomer);
             return await AddElement(newCustomer); 
         }
 
-        public async Task<string> GetAllCustomer()
+        //Multi Element
+        public async Task<string> AddLotCustomerAsync(List<Customer> newCustomers)
         {
-            return await QueryAllElement();
+            return await AddListOfElement(newCustomers);
         }
 
+        #endregion
+
+        //region d'interrogation des données
+        #region Query
         public async Task<string> GetCustomerByID(string id)
         {
             var list = await QueryElementById();
             return list.Where(cu => cu.Id == id).ToJson();
         }
-        public async Task<string> UpdateCustomer(Customer currentCustomer)
+        
+        public async Task<string> GetAllCustomer()
         {
-            return await UdpateElement(currentCustomer.Id.ToString(), currentCustomer);
-             
+            return await QueryAllElement();
         }
+        public async Task<string> GetCustomerByName(string name)
+        {
+            var result = await Collection.FindAsync(r => r.Name == name);
+            return result.ToJson();
+        }
+
+        #endregion
+
+        //region des suppression de données
         #region Delete
         public async Task<string> RemoveCustomer(string id)
         {
@@ -43,6 +66,64 @@ namespace SupMagasin.Dal
         {
             return await DeleteMultielement(customersToDelete);
         }
+        #endregion
+
+        //region de mise a jour 
+        #region Update
+
+        public async Task<string> UpdateCustomer(Customer currentCustomer)
+        {
+            return await UdpateElement(currentCustomer.Id.ToString(), currentCustomer);
+        }
+        #endregion
+
+        //Region Gestion des Enfants
+        public async Task<string> AddBankAccount(string id ,BanqDataModel banqData )
+        {
+            //on filtre et on met
+            var filter = Builders<Customer>.Filter.Eq("_id", id);
+            var update = Builders<Customer>.Update.Push<BanqDataModel>(enf => enf.BanqData,banqData);
+
+            try
+            {
+                await Collection.UpdateOneAsync(filter, update);
+                return true.ToJson();
+            }
+            catch (MongoException e)
+            {
+
+                new WriteLog(TypeLog.MangoDb).WriteFile(e.Message);
+                return false.ToJson();
+
+            } 
+        }
+        public async Task<string> AddPhones(string id, PhoneModel phoneModel)
+        {
+            //on filtre et on met l'update
+            var filter = Builders<Customer>.Filter.Eq("_id", id);
+            var update = Builders<Customer>.Update.Push<PhoneModel>(enf => enf.Phones, phoneModel );
+
+            try
+            {
+                await Collection.UpdateManyAsync(filter, update);
+                return true.ToJson();
+            }
+            catch (MongoException e)
+            {
+
+                new WriteLog(TypeLog.MangoDb).WriteFile(e.Message);
+                return false.ToJson();
+
+            }
+        }
+
+        #region Private
+        //Generation de Id
+        private string GenerateId(Customer customer)
+        {
+            return customer.Adress.Substring(0,3).Replace(' ','X') + customer.Name[0] + customer.FirstName[0] + customer.Postal_Code.Substring(2,2);  
+        }
+
         #endregion
 
     }

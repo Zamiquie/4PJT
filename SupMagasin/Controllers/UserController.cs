@@ -2,27 +2,33 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using SupMagasin.Dal;
 using SupMagasin.Model;
 
 namespace SupMagasin.Controllers
 {
-    [Authorize]
+    
     [Route("user")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : ControllerBase
     {
         public IConfiguration _configuration { get; set; }
-
+        public DalCustomer _dalCustomer { get; set; }
         public UserController(IConfiguration configuration)
         {
             _configuration = configuration;
+            _dalCustomer = new DalCustomer();
+
         }
    
         // POST: user/User
@@ -31,20 +37,31 @@ namespace SupMagasin.Controllers
         [Route("auth")]
         public IActionResult Post([FromBody] User user)
         {
-            if (user.Login == "SupMagasin" && user.Password == "Supinf0!")
+            if (user.RealyUser)
             {
-                user.Token = CreateToken(user);
-                return Ok(user);
+                var userToLogin = _dalCustomer.GetCustomerByEmail(user.Login).Result;
+                var t = BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(user.Password)));
+                if (userToLogin != null & userToLogin.Password == t)
+                {
+                    user.Token = CreateToken();
+                    user.ID = userToLogin.Id;
+                    return Ok(user);
+                }
 
             }
-            else
+            else if (user.Login == "SupMagasin" && user.Password == "Supinf0!")
             {
-                return BadRequest(new { message = "login not resolved. Try Again band of little green hacker. ヽ༼ ಠ益ಠ ༽ﾉ" });
-            }
+                user.Token = CreateToken();
+                user.Password = "***********";
+                user.ID = "NoID";
+                    return Ok(user);
 
+            }
+            // dans tous les cas on retourne non login
+            return BadRequest(new { message = "login not resolved. Try Again band of little green hacker. ヽ༼ ಠ益ಠ ༽ﾉ" });
         }
 
-        private string CreateToken(User user)
+        private string CreateToken()
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwt:key"])); // on recupere le byte de la clé (dans app.setting)
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256); // on signe le token

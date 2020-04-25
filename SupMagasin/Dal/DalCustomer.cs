@@ -48,10 +48,28 @@ namespace SupMagasin.Dal
         {
             return await QueryAllElement();
         }
-        public async Task<string> GetCustomerByName(string name)
+        public async Task<List<Customer>> GetCustomerByName(string name)
         {
             var result = await Collection.FindAsync(r => r.Name == name);
-            return result.ToJson();
+            return result.ToList();
+        }
+
+        public async Task<Customer> GetCustomerByEmail(string email)
+        {
+            var result = await Collection.FindAsync(cus => cus.Email == email);
+            return result.FirstOrDefault();
+        }
+
+        public async Task<string> GetBanqsAccountCount(string id)
+        {
+            var result = await Collection.FindAsync(cus => cus.Id == id);
+            return result.First().BanqData.ToJson();
+        }
+
+        public async Task<string> GetAllPhonesCustomer(string id)
+        {
+            var result = await Collection.FindAsync(cus => cus.Id == id);
+            return result.First().Phones.ToJson();
         }
 
         #endregion

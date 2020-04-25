@@ -15,11 +15,11 @@ namespace SupMagasin.Controllers
     [Route("[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class MagasinController : ControllerBase
+    public class ShopController : ControllerBase
     {
         public DalShop dal { get; set; }
 
-        public MagasinController()
+        public ShopController()
         {
             dal = new DalShop();
         }
@@ -30,7 +30,7 @@ namespace SupMagasin.Controllers
         [HttpGet]
         public async Task<string> GetAsync()
         {
-            var allMagasin = await dal.GetAllMagasin();
+            var allMagasin = dal.GetAllShop();
             return allMagasin;
         }
 
@@ -38,20 +38,50 @@ namespace SupMagasin.Controllers
         [HttpGet("{id}", Name = "idMagasin")]
         public async Task<string> GetAsync(string id)
         {
-            var Magasin = await dal.GetMagasinByID(id);
+            var Magasin = await dal.GetShopByID(id);
             return Magasin;
         }
+
+        [HttpGet("{id}/work", Name = "getWorkers")]
+        public async Task<string> GetWorker(string id)
+        {
+            var employes = await dal.GetEmployesByShop(id);
+            return employes;
+        }
+
+        [HttpGet("{id}/borne", Name = "getBornes")]
+        public async Task<string> GetBornes(string id)
+        {
+            var bornes = await dal.GetBorneByShop(id);
+            return bornes;
+        }
+
+        [HttpGet("{id}/rayon", Name = "getRayon")]
+        public async Task<string> GetRayons(string id)
+        {
+            var rayons = await dal.GetRayonByShop(id);
+            return rayons;
+        }
+
         #endregion
 
         #region POST
-        // POST: Magasin/addMagasin
+        // POST: shop/addShop
         [HttpPost]
-        [Route("addMagasin")]
+        [Route("addShop")]
         public void Post([FromBody] Shop newMagasin)
         {
 
             _ = dal.AddMagasinAsync(newMagasin);
 
+        }
+
+        [HttpPost]
+        // POST: shop/addShop
+        [Route("addMultiShop")]
+        public void Post([FromBody] List<Shop> newMagasins)
+        {
+            _ = dal.AddMultiMagasinAsync(newMagasins);
         }
         #endregion
 

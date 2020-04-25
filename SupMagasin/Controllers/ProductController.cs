@@ -12,11 +12,11 @@ namespace SupMagasin.Controllers
     [Route("[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class ProduitController : ControllerBase
+    public class ProductController : ControllerBase
     {
         public DalProduit dal { get; set; }
 
-        public ProduitController()
+        public ProductController()
         {
             dal = new DalProduit();
         }
@@ -39,17 +39,58 @@ namespace SupMagasin.Controllers
             var Produit = await dal.GetProduitByID(id);
             return Produit;
         }
+
+        // GET: Produit/{name}
+        [HttpGet("name/{designation}", Name = "designation")]
+        public async Task<string> GetSearchByName(string designation)
+        {
+            var Produit = await dal.GetProduitByName(designation);
+            return Produit;
+        }
+
+        // GET: Produit/{id}/Commentary
+        [HttpGet("{id}/commentary", Name = "GetCommentary")]
+        public async Task<string> GetCommentary(string id)
+        {
+            var commentaries = await dal.GetCommentaryById(id);
+            return commentaries;
+        }
+
+        // GET: Produit/{id}/supplier
+        [HttpGet("{id}/supplier", Name = "GetSupplier")]
+        public async Task<string> GetSupplier(string id)
+        {
+            var supplier = await dal.GetSupplierByIdProduct(id);
+            return supplier;
+        }
+
+        // GET: Produit/{id}/delivery
+        [HttpGet("{id}/delivery", Name = "GetDeliveries")]
+        public async Task<string> GetDelivery(string id)
+        {
+            var deliveries = await dal.GetDeliveryByIdProduct(id);
+            return deliveries;
+        }
+
         #endregion
 
         #region POST
-        // POST: Produit/addProduit
+        // POST: Product/addProd
         [HttpPost]
-        [Route("addProduit")]
+        [Route("addProd")]
         public void Post([FromBody] Produit newProduit)
         {
 
             _ = dal.AddProduitAsync(newProduit);
 
+        }
+
+        //POST: product/addProdMulti
+        [HttpPost]
+        [Route("addProdMulti")]
+        public void AddMultiProd([FromBody] List<Produit> newProduits)
+        {
+            _ = dal.AddMultiProduit(newProduits);
         }
         #endregion
 

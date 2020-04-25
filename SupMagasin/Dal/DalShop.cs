@@ -15,9 +15,6 @@ namespace SupMagasin.Dal
 
         public DalShop() : base("Shop"){}
 
-
-
-
         #region Insert
         //Insert One Mag
         public async Task<string> AddMagasinAsync(Shop newMagasin)
@@ -37,19 +34,18 @@ namespace SupMagasin.Dal
 
         #region Query
 
-        public async Task<string> GetAllMagasin()
+        public string GetAllShop()
         {
-
-            return await QueryAllElement();
+            return  QueryAllElement().Result;
         }
 
-        public async Task<string> GetMagasinByID(string id)
+        public async Task<string> GetShopByID(string id)
         {
             var list = await QueryElementById();
             return list.Where(mag => mag.ID == id).ToJson();
         }
 
-        public async Task<string> GetMagasinByCity(string city =null,string postalCode =null)
+        public async Task<string> GetShopByCity(string city =null,string postalCode =null)
         {
             IAsyncCursor<Shop> resul;
 
@@ -69,6 +65,23 @@ namespace SupMagasin.Dal
 
         }
 
+        public async Task<string> GetEmployesByShop(string idMagasin)
+        {
+            var result =  await Collection.Find(mag => mag.ID == idMagasin).FirstOrDefaultAsync();
+            return result.Employes.ToJson();
+        }
+
+        public async Task<string> GetRayonByShop(string idMagasin)
+        {
+            var result = await Collection.Find(mag => mag.ID == idMagasin).FirstOrDefaultAsync();
+            return result.Rayons.ToJson();
+        }
+
+        public async Task<string> GetBorneByShop(string idMagasin)
+        {
+            var result = await Collection.Find(mag => mag.ID == idMagasin).FirstOrDefaultAsync();
+            return result.Bornes.ToJson();
+        }
         #endregion
 
         #region Update

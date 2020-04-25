@@ -53,6 +53,7 @@ namespace TestMongo
                 PostalCode = new Random().Next(10000, 95999).ToString(),
                 DateCreation = DateTime.Now,
                 Email = "test@test.com",
+
                 Employes = new List<EmployeModel>
                 {
                    new EmployeModel() {
@@ -142,15 +143,11 @@ namespace TestMongo
                     Rayons = null
                     
             });
-                Console.Write("{0} ", x);
+
             };
             
             await dal.AddMultiMagasinAsync(list);
-
-
             //Console.ReadLine();
-
-
         }
 
         //Test Mango DB

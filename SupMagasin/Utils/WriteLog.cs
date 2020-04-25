@@ -39,6 +39,7 @@ namespace SupMagasin.Utils
 
         public void WriteFile(string message)
         {
+            Console.WriteLine("Error : {0}", message);
             using (StreamWriter file = new StreamWriter(Path + File,true))
             {
                 file.WriteLine(DateTime.Now.ToString().Replace('/','_') + " : " + message); // ecriture du message

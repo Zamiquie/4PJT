@@ -10,5 +10,7 @@ namespace SupMagasin.Model
         public string Login { get; set; }
         public string Password { get; set; }
         public string Token { get; set; }
+        public bool RealyUser { get; set; }
+        public string ID { get; set; }
     }
 }

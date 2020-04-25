@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Bson.Serialization;
 using SupMagasin.Dal;
 using SupMagasin.Model;
 using SupMagasin.Model.CustomerModel;
@@ -27,7 +30,11 @@ namespace SupMagasin
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(option =>
+            {
+                option.EnableEndpointRouting = false;
+
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             const string corsURLKEYS = "Security:Cors:Url";
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -63,9 +70,15 @@ namespace SupMagasin
         }
 
     
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor | Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto
+            });
+
+
+            if (env.EnvironmentName == "Development")
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -74,8 +87,8 @@ namespace SupMagasin
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -93,8 +106,9 @@ namespace SupMagasin
             //Creation de la collection Magasin
             DalShop dalMagasin = new DalShop();
             //Ajout d'un Magasin Test
-
-            if(dalMagasin.GetMagasinByID("M01") != null) return ; // --> si data existe on ne recree pas la base
+            var d = dalMagasin.GetAllShop();
+            var x =  BsonSerializer.Deserialize<List<Shop>>(d);
+            if ( x.Count != 0) return ; // --> si data existe on ne recree pas la base
 
             await dalMagasin.AddMagasinAsync(new Shop()
             {
@@ -104,7 +118,8 @@ namespace SupMagasin
                 City = "TestVille",
                 PostalCode = "73058",
                 DateCreation = DateTime.Now,
-                Email = "magasintest@test.com",
+                Email = "magasintest@test.com",    
+                PhoneNum = "0908070441",
                 Bornes = new List<BorneModel> {
                     new BorneModel(){
                         EtatBorne = EtatBorne.Allume,
@@ -157,6 +172,7 @@ namespace SupMagasin
                 Postal_Code = "05747",
                 Adress = "25 rue des coquelicots",
                 Email = "jean.patrick@free.luc",
+                Password = BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("Supinf0!"))),
                 Phones = new List<PhoneModel>
                 {
                     new PhoneModel()

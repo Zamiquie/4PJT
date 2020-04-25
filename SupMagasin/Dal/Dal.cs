@@ -21,33 +21,21 @@ namespace SupMagasin.Dal
         protected IMongoCollection<T> Collection { get; set; }
         
         #region Constructeur
-        public Dal(string stringConnection,string dbName, string colletionName)
-        {
-            Client = new MongoClient(stringConnection);
-            Database = Client.GetDatabase(dbName);
-            Collection = Database.GetCollection<T>(colletionName);
-        }
-
-        public Dal(string dbName, string colletionName)
-        {
-            Client = new MongoClient(ConnectionMongo.Desktop);
-            Database = Client.GetDatabase(dbName);
-            Collection = Database.GetCollection<T>(colletionName);
-        }
-
+ 
         public Dal(string collectionName)
         {
-            Client = new MongoClient(ConnectionMongo.Desktop);
+            Client = new MongoClient(ConnectionMongo.ServeurProd);
             Database = Client.GetDatabase("SupMagasin");
+
             //si on debug on supprime la collection
-            if (Debugger.IsAttached)
+            /*if (Debugger.IsAttached)
             {
                 Database.DropCollection(collectionName);
-            }
+            }*/
+
             Collection = Database.GetCollection<T>(collectionName);
+
             
-            
-     
         }
         #endregion
 
@@ -62,6 +50,7 @@ namespace SupMagasin.Dal
             }
             catch (Exception e)
             {
+               
                 new WriteLog(TypeLog.MangoDb).WriteFile(e.Message);
                 return false.ToJson();
 
@@ -93,7 +82,8 @@ namespace SupMagasin.Dal
         {
             try
             {
-                var list = Collection.Find(_ => true).ToList();
+                var list = await Collection.Find(_ => true).ToListAsync();
+               
                 return list.ToJson();
             }
             catch (Exception e)
@@ -109,7 +99,7 @@ namespace SupMagasin.Dal
         {
             try
             {
-                var list = Collection.Find<T>(_ => true).ToList();
+                var list = await Collection.Find<T>(_ => true).ToListAsync();
                 return list;
             }
             catch (Exception e)
@@ -146,7 +136,7 @@ namespace SupMagasin.Dal
             try
             {
                 //await Collection.DeleteManyAsync<T>(listOfEntrie);
-                return true.ToJson();
+                return false.ToJson();
             }
             catch (Exception e)
             {

@@ -24,6 +24,7 @@ namespace SupMagasin.Controllers
         {
             dal = new DalCustomer();
         }
+
         #region GET
         // GET: Customer/All
         [Route("All")]
@@ -33,23 +34,47 @@ namespace SupMagasin.Controllers
             var allCustomer = await dal.GetAllCustomer();
             return allCustomer;
         }
-        
+
         // GET: Customer/id
         [HttpGet("{id}", Name = "Get")]
         public async Task<string> Get(string id)
         {
             return await dal.GetCustomerByID(id);
         }
+
+
+        //GET: Customer/id/BanqDatas
+        [HttpGet("{id}/BanqDatas")]
+        public async Task<string> GetDataAccount(string id)
+        {
+            return await dal.GetBanqsAccountCount(id);
+        }
+
+        //GET: Customer/id/Phones
+        [HttpGet("{id}/Phones")]
+        public async Task<string> GetPhones(string id)
+        {
+            return await dal.GetAllPhonesCustomer(id);
+        }
         #endregion
 
         #region POST
-        // POST: Customer/add
+        // POST: Customer/addMultiCustomer
         [HttpPost]
         [Route("addCustomer")]
-        public void Post([FromBody] Customer value)
+        public void AddCustomer([FromBody] Customer customer)
         {
-            _ = dal.AddCustomerAsync(value);   
+            _ = dal.AddCustomerAsync(customer);   
         }
+
+        // POST: customer/addMultiCustomer
+        [HttpPost]
+        [Route("addMultiCustomer")]
+        public void AddMultiCustomer([FromBody] List<Customer> newCustomers)
+        {
+            _ = dal.AddLotCustomerAsync(newCustomers);
+        }
+
         #endregion
 
         #region PUT
@@ -60,7 +85,6 @@ namespace SupMagasin.Controllers
         {
             return dal.UpdateCustomer(value);
         }
-
         #endregion
 
         #region DELETE

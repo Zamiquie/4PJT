@@ -40,11 +40,31 @@ namespace SupMagasin.Model
     public static class ConnectionMongo {
         public static String Desktop { get { return "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false"; } }
         public static String Laptop { get { return "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false"; } }
-        public static String Serveur { get { return "nothing"; } }
+        public static String ServeurProd {
+            get {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("-----------------------------------------");
+                Console.WriteLine("------------------ATTENTION--------------");
+                Console.WriteLine("---------------POINTE SUR DB DE PROD-----");
+                Console.WriteLine("--------------DANGER :s -----------------");
+                Console.WriteLine("-----------------------------------------");
+                Console.ForegroundColor = ConsoleColor.White;
+                return "mongodb://ApiSupMagasin:Mar1on_BenjaM1_Valent7_Mickael8_Aym6ric@zamiquiehost.ddns.net:27017/?authSource=SupMagasin&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false"; } }
+
+        public static String ServeurLocal { 
+            get {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("-----------------------------------------");
+                Console.WriteLine("------------------ATTENTION--------------");
+                Console.WriteLine("---------POINTE SUR DB LOCAL DE TEST-----");
+                Console.WriteLine("--------------DANGER :s -----------------");
+                Console.WriteLine("-----------------------------------------");
+                Console.ForegroundColor = ConsoleColor.White;
+                return "mongodb://ApiSupMagasin:Mar1on_BenjaM1_Valent7_Mickael8_Aym6ric@192.168.1.95:27017/?authSource=SupMagasin&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false"; 
+            } 
+        }
         
     }
-
-
 
     public enum Sanction
     {

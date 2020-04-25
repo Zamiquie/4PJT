@@ -51,12 +51,27 @@ namespace SupMagasin.Dal
         public async Task<string> GetProduitByName(string designation)
         {
             var result = await Collection.FindAsync(pro => pro.Designation == designation);
-            return result.ToJson(); 
+            return result.First().ToJson(); 
         }
 
 
+        public async Task<string> GetCommentaryById(string id)
+        {
+            var result = await Collection.FindAsync(pro => pro.ID == id);
+            return result.FirstOrDefault().Commentaire.ToJson();
+        }
 
+        public async Task<string> GetSupplierByIdProduct(string id)
+        {
+            var result = await Collection.FindAsync(pro => pro.ID == id);
+            return result.FirstOrDefault().Fournisseur.ToJson();
+        }
 
+        public async Task<string> GetDeliveryByIdProduct(string id)
+        {
+            var result = await Collection.FindAsync(pro => pro.ID == id);
+            return result.FirstOrDefault().Lots.ToJson();
+        }
 
         #endregion
 

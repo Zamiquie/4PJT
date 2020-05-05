@@ -56,10 +56,12 @@ namespace SupMagasin
 
             services.AddCors(option =>
             {
-                string url = Configuration[corsURLKEYS];
+                string url = corsURLKEYS;
                 option.AddPolicy("AllowSpecificOrigin",
-                           builder => builder.WithOrigins(url)
-                                              .AllowCredentials());
+                           builder => builder.WithOrigins(url).AllowCredentials());
+                option.AddPolicy("PolicyFrontEnd", builder =>
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+                );
             });
 
             services.AddSwaggerGen(c =>
@@ -80,13 +82,15 @@ namespace SupMagasin
 
             if (env.EnvironmentName == "Development")
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/error");
             }
             else
             {
+                app.UseExceptionHandler("/error");
                 app.UseHsts();
             }
-
+            app.UseCors();
             app.UseMvc();
             app.UseHttpsRedirection();
             app.UseAuthentication();

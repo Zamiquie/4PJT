@@ -46,6 +46,7 @@ namespace SupMagasin.Dal
         
         public async Task<string> GetAllCustomer()
         {
+            
             return await QueryAllElement();
         }
         public async Task<List<Customer>> GetCustomerByName(string name)

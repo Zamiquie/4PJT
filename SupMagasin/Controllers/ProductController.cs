@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SupMagasin.Dal;
 using SupMagasin.Model;
@@ -12,6 +13,7 @@ namespace SupMagasin.Controllers
     [Route("[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [EnableCors(PolicyName = "PolicyFrontEnd")]
     public class ProductController : ControllerBase
     {
         public DalProduit dal { get; set; }

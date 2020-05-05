@@ -12,7 +12,6 @@ namespace SupMagasin.Dal
 {
     public class DalShop : Dal<Shop>
     {
-
         public DalShop() : base("Shop"){}
 
         #region Insert

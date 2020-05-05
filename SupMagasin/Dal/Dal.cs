@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.IO;
 using MongoDB.Driver;
 using SupMagasin.Model;
 using SupMagasin.Utils;
@@ -24,7 +25,7 @@ namespace SupMagasin.Dal
  
         public Dal(string collectionName)
         {
-            Client = new MongoClient(ConnectionMongo.ServeurProd);
+            Client = new MongoClient(ConnectionMongo.Desktop);
             Database = Client.GetDatabase("SupMagasin");
 
             //si on debug on supprime la collection
@@ -83,8 +84,9 @@ namespace SupMagasin.Dal
             try
             {
                 var list = await Collection.Find(_ => true).ToListAsync();
+                var jsonWriterSettings = new JsonWriterSettings { OutputMode = JsonOutputMode.Strict };
                
-                return list.ToJson();
+                return list.ToJson(jsonWriterSettings);
             }
             catch (Exception e)
             {

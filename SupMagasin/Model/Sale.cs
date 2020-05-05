@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SupMagasin.Model
 {
-    public class Vente
+    public class Sale
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.String)]
-        public int ID { get; set; }
+        public string ID { get; set; }
         [BsonElement("SaleDate")]
         public DateTime VenteDate { get; set; }
         [BsonElement("IdPhone")]
@@ -25,6 +25,5 @@ namespace SupMagasin.Model
         public bool isPayed { get; set; }
         [BsonElement("ProduitsSales")]
         public List<SaleProduct> ProduitVente { get; set; }
-        
     }
 }

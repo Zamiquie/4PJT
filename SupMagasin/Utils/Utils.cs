@@ -79,6 +79,9 @@ namespace SupMagasin.Model
     {
         MangoDb = 1,
         AspNet = 2,
-        Other = 3
+        AuthenError =3,
+        AuthenSuccess= 4,
+        Other = 5,
+        
     }
 }

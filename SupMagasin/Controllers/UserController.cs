@@ -7,12 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SupMagasin.Dal;
 using SupMagasin.Model;
+using SupMagasin.Utils;
 
 namespace SupMagasin.Controllers
 {
@@ -20,6 +22,7 @@ namespace SupMagasin.Controllers
     [Route("user")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [EnableCors(PolicyName = "PolicyFrontEnd")]
     public class UserController : ControllerBase
     {
         public IConfiguration _configuration { get; set; }
@@ -35,18 +38,31 @@ namespace SupMagasin.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("auth")]
+        
         public IActionResult Post([FromBody] User user)
         {
             if (user.RealyUser)
             {
                 var userToLogin = _dalCustomer.GetCustomerByEmail(user.Login).Result;
                 var t = BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(user.Password)));
-                if (userToLogin != null & userToLogin.Password == t)
+                //si le user n'existe pas
+                if (userToLogin == null)
+                {
+                    new WriteLog(TypeLog.AuthenError).WriteFile(user.Login + " unknow in datas (⊙.☉)7 ");
+                }
+                //si le ùot de passe est eronnée
+                else if(userToLogin.Password != t)
+                {
+                    new WriteLog(TypeLog.AuthenError).WriteFile(userToLogin.Email+ " reason : bad password  (╬ ಠ益ಠ)");
+                }
+                else
                 {
                     user.Token = CreateToken();
                     user.ID = userToLogin.Id;
+                    new WriteLog(TypeLog.AuthenSuccess).WriteFile(userToLogin.Email + " is connected  ヽ(´▽`)/");
                     return Ok(user);
                 }
+                
 
             }
             else if (user.Login == "SupMagasin" && user.Password == "Supinf0!")
@@ -57,6 +73,7 @@ namespace SupMagasin.Controllers
                     return Ok(user);
 
             }
+
             // dans tous les cas on retourne non login
             return BadRequest(new { message = "login not resolved. Try Again band of little green hacker. ヽ༼ ಠ益ಠ ༽ﾉ" });
         }

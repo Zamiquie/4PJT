@@ -15,7 +15,7 @@ namespace SupMagasin.Utils
 
         public WriteLog(TypeLog log)
         {
-            Path = Directory.GetCurrentDirectory() + "../../Log/";
+            Path = Directory.GetCurrentDirectory() + "..\\..\\Log\\Api";
 
             if (!Directory.Exists(Path))
             {
@@ -33,6 +33,12 @@ namespace SupMagasin.Utils
                 case TypeLog.Other:
                     File = "Log_other_";
                     break;
+                case TypeLog.AuthenSuccess:
+                    File = "Success_Auth_";
+                    break;
+                case TypeLog.AuthenError:
+                    File = "Error_Auth_";
+                    break;
             }
             File = File + DateTime.Now.ToString("dd/MM/yyyy").Replace('/','_') + ".log"; // ajout du nom plus de la date
         }
@@ -40,7 +46,7 @@ namespace SupMagasin.Utils
         public void WriteFile(string message)
         {
             Console.WriteLine("Error : {0}", message);
-            using (StreamWriter file = new StreamWriter(Path + File,true))
+            using (StreamWriter file = new StreamWriter(Path +"\\"+ File,true))
             {
                 file.WriteLine(DateTime.Now.ToString().Replace('/','_') + " : " + message); // ecriture du message
             }

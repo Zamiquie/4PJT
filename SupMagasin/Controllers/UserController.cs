@@ -83,7 +83,7 @@ namespace SupMagasin.Controllers
         public async Task<IActionResult> CreateUser([FromBody]Customer createUser)
         { 
             // si un element obligatoire manque à la création de compte
-            if (createUser.Email == "" || createUser.Password == "" || createUser.Name == ""|| createUser.FirstName == ""|| createUser.Postal_Code == "" || createUser.City == "" || createUser.Adress == "")
+            if (String.IsNullOrEmpty(createUser.Email) || String.IsNullOrEmpty(createUser.Password)|| String.IsNullOrEmpty(createUser.Name)|| String.IsNullOrEmpty(createUser.FirstName)|| String.IsNullOrEmpty(createUser.Postal_Code)|| String.IsNullOrEmpty(createUser.City) || String.IsNullOrEmpty(createUser.Adress))
             {
                 return BadRequest(new { message = ErrorMissingField(createUser)});
             }
@@ -135,13 +135,13 @@ namespace SupMagasin.Controllers
         private string ErrorMissingField(Customer customer)
         {
             string returnMessage = "Filds missing : {";
-            if (customer.Email == "") returnMessage = returnMessage + "Email ";
-            if(customer.Password == "") returnMessage = returnMessage + "Password ";
-            if (customer.Name == "") returnMessage = returnMessage + "Name ";
-            if (customer.FirstName == "") returnMessage = returnMessage + "FirstName ";
-            if (customer.Postal_Code == "") returnMessage = returnMessage + "PostalCode ";
-            if (customer.City == "") returnMessage = returnMessage + "City ";
-            if (customer.Adress == "") returnMessage = returnMessage + "Adress ";
+            if (String.IsNullOrEmpty(customer.Email )) returnMessage = returnMessage + "Email ";
+            if(String.IsNullOrEmpty(customer.Password )) returnMessage = returnMessage + "Password ";
+            if (String.IsNullOrEmpty(customer.Name )) returnMessage = returnMessage + "Name ";
+            if (String.IsNullOrEmpty(customer.FirstName )) returnMessage = returnMessage + "FirstName ";
+            if (String.IsNullOrEmpty(customer.Postal_Code )) returnMessage = returnMessage + "PostalCode ";
+            if (String.IsNullOrEmpty(customer.City )) returnMessage = returnMessage + "City ";
+            if (String.IsNullOrEmpty(customer.Adress )) returnMessage = returnMessage + "Adress ";
             return returnMessage + "}";
 
         }

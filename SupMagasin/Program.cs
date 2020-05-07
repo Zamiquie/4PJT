@@ -19,7 +19,7 @@ namespace SupMagasin
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
-                //.UseUrls("http://*:15403");
+                .UseStartup<Startup>()
+                .UseUrls("http://*:15403");
     }
 }

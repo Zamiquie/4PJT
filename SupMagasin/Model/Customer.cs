@@ -16,7 +16,7 @@ namespace SupMagasin.Model
         public Sexe Sexe { get; set; }
         [BsonElement("Email")]
         public string Email { get; set; }
-        [BsonElement("Passsword")]
+        [BsonElement("Password")]
         public string Password { get; set; }
         [BsonElement("Name")]
         public string Name { get; set; }

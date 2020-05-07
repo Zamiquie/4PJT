@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using SupMagasin.Model.CustomerModel;
 using SupMagasin.Utils;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace SupMagasin.Dal
 {
@@ -25,12 +27,17 @@ namespace SupMagasin.Dal
         public async Task<string> AddCustomerAsync(Customer newCustomer)
         {
             newCustomer.Id = GenerateId(newCustomer);
+            newCustomer.Password = BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(newCustomer.Password)));
             return await AddElement(newCustomer); 
         }
 
         //Multi Element
         public async Task<string> AddLotCustomerAsync(List<Customer> newCustomers)
         {
+            foreach(Customer cust in newCustomers)
+            {
+                cust.Password = BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(cust.Password)));
+            }
             return await AddListOfElement(newCustomers);
         }
 

@@ -34,16 +34,15 @@ namespace SupMagasin.Controllers
 
         }
    
-        // POST: user/User
+        // POST: user/auth
         [AllowAnonymous]
         [HttpPost]
         [Route("auth")]
-        
-        public IActionResult Post([FromBody] User user)
+        public async Task<IActionResult> Post([FromBody] User user)
         {
             if (user.RealyUser)
             {
-                var userToLogin = _dalCustomer.GetCustomerByEmail(user.Login).Result;
+                var userToLogin = await _dalCustomer.GetCustomerByEmail(user.Login);
                 var t = BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(user.Password)));
                 //si le user n'existe pas
                 if (userToLogin == null)
@@ -58,6 +57,7 @@ namespace SupMagasin.Controllers
                 else
                 {
                     user.Token = CreateToken();
+                    user.Password = "";
                     user.ID = userToLogin.Id;
                     new WriteLog(TypeLog.AuthenSuccess).WriteFile(userToLogin.Email + " is connected  ヽ(´▽`)/");
                     return Ok(user);
@@ -77,6 +77,43 @@ namespace SupMagasin.Controllers
             // dans tous les cas on retourne non login
             return BadRequest(new { message = "login not resolved. Try Again band of little green hacker. ヽ༼ ಠ益ಠ ༽ﾉ" });
         }
+        //Route : user/create
+        [AllowAnonymous]
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateUser([FromBody]Customer createUser)
+        { 
+            // si un element obligatoire manque à la création de compte
+            if (createUser.Email == "" || createUser.Password == "" || createUser.Name == ""|| createUser.FirstName == ""|| createUser.Postal_Code == "" || createUser.City == "" || createUser.Adress == "")
+            {
+                return BadRequest(new { message = ErrorMissingField(createUser)});
+            }
+
+            var nUser = _dalCustomer.GetCustomerByEmail(createUser.Email).Result;
+            //on recherche si le user existe dèja
+            if(nUser != null)
+            {
+                return StatusCode(550,"User exist Already");
+            }
+            //sinon on le creer
+            else
+            {
+                await _dalCustomer.AddCustomerAsync(createUser);
+                //on le recherche
+                var newUser = await _dalCustomer.GetCustomerByEmail(createUser.Email);
+                //on creer un object user
+                User logNewUser = new User()
+                {
+                    ID = newUser.Id,
+                    Login = newUser.Email,
+                    RealyUser = true,
+                    Token = CreateToken()
+                };
+                //on le renvois avec les nouvelles informations
+                return Ok(logNewUser);
+            }
+
+
+        }
 
         private string CreateToken()
         {
@@ -90,6 +127,22 @@ namespace SupMagasin.Controllers
                                              signingCredentials : credentials); // --> signature avec clé
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+
+        }
+
+
+        //function pour identifier les champs manquants
+        private string ErrorMissingField(Customer customer)
+        {
+            string returnMessage = "Filds missing : {";
+            if (customer.Email == "") returnMessage = returnMessage + "Email ";
+            if(customer.Password == "") returnMessage = returnMessage + "Password ";
+            if (customer.Name == "") returnMessage = returnMessage + "Name ";
+            if (customer.FirstName == "") returnMessage = returnMessage + "FirstName ";
+            if (customer.Postal_Code == "") returnMessage = returnMessage + "PostalCode ";
+            if (customer.City == "") returnMessage = returnMessage + "City ";
+            if (customer.Adress == "") returnMessage = returnMessage + "Adress ";
+            return returnMessage + "}";
 
         }
     }

@@ -15,7 +15,7 @@ namespace SupMagasin.Controllers
     public class ErrorController : ControllerBase
     {
         // GET: api/error
-        [HttpGet]
+        [HttpGet] 
         public ActionResult Error()
         {
             //var context = HttpContext.Features.Get<IExceptionHandlerFeature>();

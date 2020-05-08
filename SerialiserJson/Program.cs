@@ -8,7 +8,7 @@ namespace SerialiserJson
     {
         static void Main(string[] args)
         {
-            Customer obj = new Customer();
+            Produit obj = new Produit();
             Console.WriteLine(JsonConvert.SerializeObject(obj));
             Console.ReadLine();
         }

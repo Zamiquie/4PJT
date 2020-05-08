@@ -108,6 +108,10 @@ namespace SupMagasin.Controllers
                     RealyUser = true,
                     Token = CreateToken()
                 };
+
+                //envois d'un mail au nouveau client
+                new Mailling(_configuration).MailToNewCustomer(createUser);
+
                 //on le renvois avec les nouvelles informations
                 return Ok(logNewUser);
             }

@@ -34,5 +34,7 @@ namespace SupMagasin.Model
         public List<LotsModel> Lots { get; set; }
         [BsonElement("isSaling")]
         public bool IsSaling { get; set; }
+        [BsonElement("QrCode")]
+        public string QrCode { get; set; }
     }
 }

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -18,7 +15,6 @@ using SupMagasin.Utils;
 
 namespace SupMagasin.Controllers
 {
-    
     [Route("user")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -62,8 +58,6 @@ namespace SupMagasin.Controllers
                     new WriteLog(TypeLog.AuthenSuccess).WriteFile(userToLogin.Email + " is connected  ヽ(´▽`)/");
                     return Ok(user);
                 }
-                
-
             }
             else if (user.Login == "SupMagasin" && user.Password == "Supinf0!")
             {
@@ -115,10 +109,7 @@ namespace SupMagasin.Controllers
                 //on le renvois avec les nouvelles informations
                 return Ok(logNewUser);
             }
-
-
         }
-
         private string CreateToken()
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwt:key"])); // on recupere le byte de la clé (dans app.setting)
@@ -147,7 +138,6 @@ namespace SupMagasin.Controllers
             if (String.IsNullOrEmpty(customer.City )) returnMessage = returnMessage + "City ";
             if (String.IsNullOrEmpty(customer.Adress )) returnMessage = returnMessage + "Adress ";
             return returnMessage + "}";
-
         }
     }
 }

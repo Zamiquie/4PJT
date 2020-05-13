@@ -12,7 +12,7 @@ namespace SupMagasin.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [EnableCors(PolicyName = "PolicyFrontEnd")]
     public class ProductController : ControllerBase
     {
@@ -79,12 +79,12 @@ namespace SupMagasin.Controllers
         #region POST
         // POST: Product/addProd
         [HttpPost]
-        [Route("addProd")]
-        public void Post([FromBody] Produit newProduit)
+        [Route("addprod")]
+        public IActionResult Post([FromBody] Produit newProduit)
         {
 
             _ = dal.AddProduitAsync(newProduit);
-
+            return Ok();
         }
 
         //POST: product/addProdMulti

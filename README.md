@@ -31,7 +31,7 @@ Creation outils :
 
 ## Le 18/05/20 by Zamiquie:
 - Mise en place de la route bluetooth
-- Ajout de fichiers logs sur les B
+- Ajout de fichiers logs sur les acces Bluetooth
 - Ajout Template de Mail
 - Ajout Avertissement Mail pour mise en prod
 -Ajout champs "GoToken" et "FaceToken" sur Customer

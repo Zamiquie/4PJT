@@ -29,10 +29,13 @@ Creation outils :
 -Correction des Bugs dans la dalMere
 -Ajout de la creation et ajout de data dès le lancement de L'Api
 
-### A FAIRE 
-- refonte des Routes pour mieux epouser les Dals
-- Creation de Lib de Generation des Données
-- Mise En prod de l'Api 
+##Le 18/05/20 by Zamiquie:
+- Mise en place de la route bluetooth
+- Ajout de fichiers logs sur les B
+- Ajout Template de Mail
+- Ajout Avertissement Mail pour mise en prod
+-Ajout champs "GoToken" et "FaceToken" sur Customer
+- Ajout Dossier "temps" pour les fichiers ne restants pas longtemps sur le serveur
 
 
 

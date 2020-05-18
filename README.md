@@ -25,9 +25,9 @@ Creation outils :
 - Supression des inputs simples sur tous les déletes
 
 ## Le 12/04/2020 by Zamiquie : 
--Refonte des Dals (Data Access Layer)
--Correction des Bugs dans la dalMere
--Ajout de la creation et ajout de data dès le lancement de L'Api
+- Refonte des Dals (Data Access Layer)
+- Correction des Bugs dans la dalMere
+- Ajout de la creation et ajout de data dès le lancement de L'Api
 
 ## Le 18/05/20 by Zamiquie:
 - Mise en place de la route bluetooth

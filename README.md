@@ -29,7 +29,7 @@ Creation outils :
 -Correction des Bugs dans la dalMere
 -Ajout de la creation et ajout de data dès le lancement de L'Api
 
-##Le 18/05/20 by Zamiquie:
+## Le 18/05/20 by Zamiquie:
 - Mise en place de la route bluetooth
 - Ajout de fichiers logs sur les B
 - Ajout Template de Mail

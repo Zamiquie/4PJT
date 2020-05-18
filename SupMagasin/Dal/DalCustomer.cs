@@ -80,6 +80,12 @@ namespace SupMagasin.Dal
             return result.First().Phones.ToJson();
         }
 
+        public async Task<Customer> GetCustomerByMacTelephone(string mac)
+        {
+            var result = await Collection.Find(cus => cus.Phones.Any(tel => tel.MAC == mac)).FirstOrDefaultAsync();
+            return result;
+        }
+
         #endregion
 
         //region des suppression de données

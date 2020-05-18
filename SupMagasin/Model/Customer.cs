@@ -42,6 +42,10 @@ namespace SupMagasin.Model
         public int AnnualFrequentation { get; set; }
         [BsonElement("PanierMoyen")]
         public float PanierMoyen { get; set; }
+        [BsonElement("GooToken")]
+        public string GooToken { get; set; }
+        [BsonElement("FaceToken")]
+        public string FaceToken { get; set; }
 
     }
 

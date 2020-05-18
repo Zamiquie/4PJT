@@ -16,6 +16,7 @@ using SupMagasin.Model;
 using SupMagasin.Model.CustomerModel;
 using SupMagasin.Model.ProductModel;
 using SupMagasin.Model.ShopModel;
+using SupMagasin.Utils;
 
 namespace SupMagasin
 {
@@ -60,8 +61,7 @@ namespace SupMagasin
                 option.AddPolicy("AllowSpecificOrigin",
                            builder => builder.WithOrigins(url).AllowCredentials());
                 option.AddPolicy("PolicyFrontEnd", builder =>
-                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
-                );
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
 
             services.AddSwaggerGen(c =>
@@ -101,6 +101,12 @@ namespace SupMagasin
             });
 
             FirstImplementation();
+
+            //si configuration sur vrai. Pour ne pas alerter à chaque test
+            if (Configuration["Alert:Coworker"] == "true")
+            {
+                AlertCoworker();
+            }
         }
 
 
@@ -271,6 +277,13 @@ namespace SupMagasin
             });
 
 
+        }
+
+
+        //Function pour prévenir en cas de nouveau déploiement
+        private void AlertCoworker()
+        {
+            new Mailling().SendNewDeployment();
         }
     }
 }

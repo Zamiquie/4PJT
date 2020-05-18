@@ -15,7 +15,7 @@ namespace SupMagasin.Utils
 
         public WriteLog(TypeLog log)
         {
-            Path = Directory.GetCurrentDirectory() + "..\\..\\Log\\Api";
+            Path = Directory.GetCurrentDirectory() + "..\\..\\Log\\Api\\"+ DateTime.Now.ToString("dd/MM/yyyy").Replace('/', '_');
 
             if (!Directory.Exists(Path))
             {
@@ -39,16 +39,21 @@ namespace SupMagasin.Utils
                 case TypeLog.AuthenError:
                     File = "Error_Auth_";
                     break;
+                case TypeLog.Bluethoo:
+                    File = "Bluetoo";
+                    break;
+
             }
             File = File + DateTime.Now.ToString("dd/MM/yyyy").Replace('/','_') + ".log"; // ajout du nom plus de la date
         }
 
         public void WriteFile(string message)
         {
-            Console.WriteLine("Error : {0}", message);
+            
             using (StreamWriter file = new StreamWriter(Path +"\\"+ File,true))
             {
-                file.WriteLine(DateTime.Now.ToString().Replace('/','_') + " : " + message); // ecriture du message
+                file.WriteLineAsync(DateTime.Now.ToString().Replace('/','_') + " : " + message); // ecriture du message
+                file.Close();
             }
         }
     }

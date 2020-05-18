@@ -23,4 +23,9 @@
     
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Asset\EmailTemplate\" />
+    <Folder Include="temps\" />
+  </ItemGroup>
+
 </Project>

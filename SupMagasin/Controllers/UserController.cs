@@ -38,6 +38,7 @@ namespace SupMagasin.Controllers
         {
             if (user.RealyUser)
             {
+                if (user.Login == null ) return BadRequest(new { message = " Login Null. Stop it little pervers -_-# " });
                 var userToLogin = await _dalCustomer.GetCustomerByEmail(user.Login);
                 var t = BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(user.Password)));
                 //si le user n'existe pas

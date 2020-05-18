@@ -1,0 +1,723 @@
+{
+	"info": {
+		"_postman_id": "06d33c10-9798-4c08-937d-a335d48e8841",
+		"name": "TestApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Token_Login",
+			"item": [
+				{
+					"name": "http://localhost:15400/user/auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Login\" : \"jean.patrick@free.luc\",\n\t\"Password\" : \"Supinf0!\",\n\t\"RealyUser\" : true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:15400/user/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "15400",
+							"path": [
+								"user",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:15400/Borne/All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODY4ODEwMjYsImlzcyI6IlN1cF9fTWFnYXppbl9fMjAyMCIsImF1ZCI6ImZyb250SW9uaWMifQ.SPJhTjAxUBx1fXmljRUD6s2Jche3FN9pwhZ1vgFPF4s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:15400/Customer/All",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "15400",
+							"path": [
+								"Customer",
+								"All"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:15400/api/doc/v1/swagger.json",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:15400/api/doc/v1/swagger.json",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "15400",
+							"path": [
+								"api",
+								"doc",
+								"v1",
+								"swagger.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": null,\r\n  \"Sexe\": 1,\r\n  \"Email\": \"aymericbaquet@yahoo.fr\",\r\n  \"Password\": \"azerty77\",\r\n  \"Name\": \"Baquet\",\r\n  \"FirstName\": \"Aymeric\",\r\n  \"BirthdayDay\": \"0001-01-01T00:00:00\",\r\n  \"Adress\": \"25 rue de la coquellettes\",\r\n  \"Postal_Code\": \"38580\",\r\n  \"City\": \"Brede sur Pintade\",\r\n  \"BanqData\": null,\r\n  \"Phones\": null,\r\n  \"Photo\": null,\r\n  \"Last_Time\": \"0001-01-01T00:00:00\",\r\n  \"AnnualFrequentation\": 0,\r\n  \"PanierMoyen\": 0\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:15403/user/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "15403",
+							"path": [
+								"user",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Produit",
+			"item": [
+				{
+					"name": "Commentaires",
+					"item": [
+						{
+							"name": "GetCommentaireByProduct",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODcwNDk2NjksImlzcyI6IlN1cF9fTWFnYXppbl9fMjAyMCIsImF1ZCI6ImZyb250SW9uaWMifQ.693Y8LGe_1yzquVQTzXsraNw7E6XjMksTnv60D1FTPA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:15400/Product/Man0425400490/Commentary",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "15400",
+									"path": [
+										"Product",
+										"Man0425400490",
+										"Commentary"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Supplier",
+					"item": [
+						{
+							"name": "GetSupplier",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODcwNDk2NjksImlzcyI6IlN1cF9fTWFnYXppbl9fMjAyMCIsImF1ZCI6ImZyb250SW9uaWMifQ.693Y8LGe_1yzquVQTzXsraNw7E6XjMksTnv60D1FTPA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:15400/Product/Man0425400490/supplier",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "15400",
+									"path": [
+										"Product",
+										"Man0425400490",
+										"supplier"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Delivery",
+					"item": [
+						{
+							"name": "Get Delivery",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODcwNDk2NjksImlzcyI6IlN1cF9fTWFnYXppbl9fMjAyMCIsImF1ZCI6ImZyb250SW9uaWMifQ.693Y8LGe_1yzquVQTzXsraNw7E6XjMksTnv60D1FTPA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:15400/Product/Man0425400490/delivery",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "15400",
+									"path": [
+										"Product",
+										"Man0425400490",
+										"delivery"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "AddProduit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ID\": null,\n    \"Designation\": \"Enfant Infécté\",\n    \"Description\": \"Enfant infecté par le coronavirus venant de Chine\",\n    \"Poids\": 15.4,\n    \"Fournisseur\": null,\n    \"PeremptionDate\": \"0001-01-01T00:00:00\",\n    \"stock\": {\n        \"ID\": 1,\n        \"PeremptionDelay\": \"2020-06-30\",\n        \"Quantite\": 20,\n        \"EntryDate\": \"2020-03-01\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/Produit/addProduit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Produit",
+								"addProduit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllProduct",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODcwNDg5MzcsImlzcyI6IlN1cF9fTWFnYXppbl9fMjAyMCIsImF1ZCI6ImZyb250SW9uaWMifQ.jtY3O6T8DVPzb6COCe5Nmz9b7twnd-Kgc0SHRqjWQO4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:15400/Product/All",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "15400",
+							"path": [
+								"Product",
+								"All"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProductById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODcwNDg5MzcsImlzcyI6IlN1cF9fTWFnYXppbl9fMjAyMCIsImF1ZCI6ImZyb250SW9uaWMifQ.jtY3O6T8DVPzb6COCe5Nmz9b7twnd-Kgc0SHRqjWQO4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:15400/Product/Man0425400490",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "15400",
+							"path": [
+								"Product",
+								"Man0425400490"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProductByName",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODcwNDk2NjksImlzcyI6IlN1cF9fTWFnYXppbl9fMjAyMCIsImF1ZCI6ImZyb250SW9uaWMifQ.693Y8LGe_1yzquVQTzXsraNw7E6XjMksTnv60D1FTPA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:15400/Product/name/Mangue",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "15400",
+							"path": [
+								"Product",
+								"name",
+								"Mangue"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Magasin",
+			"item": [
+				{
+					"name": "Employes",
+					"item": [
+						{
+							"name": "RemoveEmploye",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/Employe/DeleteOnly/100",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"Employe",
+										"DeleteOnly",
+										"100"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AddEmployee",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ID\": \"211\",\n    \"Nom\": \"Slave\",\n    \"Prenom\": \"Esclave\",\n    \"NumeroSS\": \"1254178855\",\n    \"NaissanceDate\": \"0001-01-01T00:00:00\",\n    \"EmbaucheDate\": \"0001-01-01T00:00:00\",\n    \"Email\": \"test@hotmail.fr\",\n    \"Manager\": null,\n    \"Magasin\": null,\n    \"SortieDate\": \"0001-01-01T00:00:00\",\n    \"coeeficcient\": 0,\n    \"isSanctionned\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/Employe/addEmploye",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"Employe",
+										"addEmploye"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "REmoveEmploye",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/Employe/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"Employe",
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "CreateMagasin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ID\": \"7978\",\n    \"Name\": \"SupMagasin\",\n    \"Adress\": \"Le courant\",\n    \"Postal_Code\": \"47541\",\n    \"City\": \"PriseVille\",\n    \"Email\": \"158\",\n    \"IdResponsable\": null,\n    \"NbRayon\": 5,\n    \"DateCreation\": \"0001-01-01T00:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllShop",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/Shop",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Shop"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "BanqData",
+					"item": [
+						{
+							"name": "GetAllBanqAccount",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODcwNDc0MzYsImlzcyI6IlN1cF9fTWFnYXppbl9fMjAyMCIsImF1ZCI6ImZyb250SW9uaWMifQ.q4ubq915z2rFAYjE7asOVKHFAE4OYZ8O0pkO4xB5zwY",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:15400/customer/25XPJ74/BanqDatas",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "15400",
+									"path": [
+										"customer",
+										"25XPJ74",
+										"BanqDatas"
+									]
+								},
+								"description": "Get All Banq Account from a customer"
+							},
+							"response": []
+						},
+						{
+							"name": "GetAllPhones",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODcwNDc0MzYsImlzcyI6IlN1cF9fTWFnYXppbl9fMjAyMCIsImF1ZCI6ImZyb250SW9uaWMifQ.q4ubq915z2rFAYjE7asOVKHFAE4OYZ8O0pkO4xB5zwY",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:15400/customer/25XPJ74/Phones",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "15400",
+									"path": [
+										"customer",
+										"25XPJ74",
+										"Phones"
+									]
+								},
+								"description": "Get All Banq Account from a customer"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "RemoveCustomer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/Customer/DeleteOnly/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Customer",
+								"DeleteOnly",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateCustomer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"Id\": \"747\",\n    \"Sexe\": 1,\n    \"Name\": \"Baquet\",\n    \"FirstName\": \"Aymeric\",\n    \"BirthdayDay\": \"0001-01-01T00:00:00\",\n    \"Adress\": \"26 rue du coaatd\",\n    \"Postal_Code\": \"35190\",\n    \"City\": \"Rennes\",\n    \"Last_Time\": \"0001-01-01T00:00:00\",\n    \"AnnualFrequentation\": 0,\n    \"PanierMoyen\": 0,\n    \"RIB\": null,\n    \"TempsMoyen\": \"0001-01-01T00:00:00\",\n    \"Photo\": null,\n    \"Email\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/Customer/addCustomer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Customer",
+								"addCustomer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomerById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/Customer/85",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Customer",
+								"85"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetEmployes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/Employe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Employe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8084/api/generic/modifzam?name=gauthier&username=Ellinard",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"api",
+								"generic",
+								"modifzam"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "gauthier"
+								},
+								{
+									"key": "username",
+									"value": "Ellinard"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllCustomer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/Customer/AllCustomer",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Customer",
+								"AllCustomer"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

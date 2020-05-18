@@ -25,7 +25,7 @@ namespace SupMagasin.Dal
  
         public Dal(string collectionName)
         {
-            Client = new MongoClient(ConnectionMongo.Laptop);
+            Client = new MongoClient(ConnectionMongo.ServeurProd);
             Database = Client.GetDatabase("SupMagasin");
 
             //si on debug on supprime la collection

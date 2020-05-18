@@ -82,6 +82,7 @@ namespace SupMagasin.Model
         AuthenError =3,
         AuthenSuccess= 4,
         Other = 5,
+        Bluethoo = 6
         
     }
 }

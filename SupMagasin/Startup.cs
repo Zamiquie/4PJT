@@ -69,6 +69,7 @@ namespace SupMagasin
                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "ApiSupMagasin",Version = "v1"});
 
            });
+
         }
 
     

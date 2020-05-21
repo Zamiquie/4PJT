@@ -31,7 +31,6 @@ namespace SupMagasin.Controllers
 
         #region Get
 
-      
         [HttpGet]
         public async Task<IActionResult> ControlBluetooth(string code, string phones)
         {

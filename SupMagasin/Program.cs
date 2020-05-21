@@ -15,6 +15,7 @@ namespace SupMagasin
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
+            Console.WriteLine("Bonjour");
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

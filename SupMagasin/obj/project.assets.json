@@ -3775,7 +3775,7 @@
       ]
     },
     "runtime.native.System.Net.Security/4.3.0": {
-      "sha512": "M2nN92ePS8BgQ2oi6Jj3PlTUzadYSIWLdZrHY1n1ZcW9o4wAQQ6W+aQ2lfq1ysZQfVCgDwY58alUdowrzezztg==",
+      "sha512": "ARfgeRYF2AnYIcqEvy9VE0agN/3zexMMPtcegq1THpOMS63rIGMi706vCo6pbv9Xzw4qhdX1Gu1zyLZHj2WtLA==",
       "type": "package",
       "path": "runtime.native.system.net.security/4.3.0",
       "files": [
@@ -7220,7 +7220,7 @@
       ]
     },
     "System.Security.Cryptography.OpenSsl/4.3.0": {
-      "sha512": "h4CEgOgv5PKVF/HwaHzJRiVboL2THYCou97zpmhjghx5frc7fIvlkY1jL+lnIQyChrJDMNEXS6r7byGif8Cy4w==",
+      "sha512": "vOYy7Jv9KsG3ld2hLt0GoERd82SZi4BelrbXLwI9yFBYX7kpbvUCWYo4eyevk47cuJXZ9ZLVAryANcc7iY71aA==",
       "type": "package",
       "path": "system.security.cryptography.openssl/4.3.0",
       "files": [
@@ -8186,25 +8186,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ZamiquiePort\\.nuget\\packages\\": {},
+    "C:\\Users\\Zamiquie\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\SUPINFO\\4eme_Année\\4PROJ\\SupMag\\4PJT\\SupMagasin\\SupMagasin.csproj",
+      "projectUniqueName": "D:\\Supinfo\\4Proj\\4PJT\\SupMagasin\\SupMagasin.csproj",
       "projectName": "SupMagasin",
-      "projectPath": "E:\\SUPINFO\\4eme_Année\\4PROJ\\SupMag\\4PJT\\SupMagasin\\SupMagasin.csproj",
-      "packagesPath": "C:\\Users\\ZamiquiePort\\.nuget\\packages\\",
-      "outputPath": "E:\\SUPINFO\\4eme_Année\\4PROJ\\SupMag\\4PJT\\SupMagasin\\obj\\",
+      "projectPath": "D:\\Supinfo\\4Proj\\4PJT\\SupMagasin\\SupMagasin.csproj",
+      "packagesPath": "C:\\Users\\Zamiquie\\.nuget\\packages\\",
+      "outputPath": "D:\\Supinfo\\4Proj\\4PJT\\SupMagasin\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\ZamiquiePort\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Zamiquie\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],

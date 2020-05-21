@@ -54,6 +54,14 @@ namespace SupMagasin.Dal
             return result.First().ToJson(); 
         }
 
+        //Requete des produits ayant leur stock =< au seuil d'alerte
+       /* public async Task<string> GetProduitToOrder(int stockAlert)
+        {
+            var Produit = 
+            
+
+        }*/
+
 
         public async Task<string> GetCommentaryById(string id)
         {

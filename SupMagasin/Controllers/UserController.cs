@@ -68,7 +68,6 @@ namespace SupMagasin.Controllers
                     return Ok(user);
 
             }
-
             // dans tous les cas on retourne non login
             return BadRequest(new { message = "login not resolved. Try Again band of little green hacker. ヽ༼ ಠ益ಠ ༽ﾉ" });
         }
@@ -132,7 +131,7 @@ namespace SupMagasin.Controllers
         {
             string returnMessage = "Filds missing : {";
             if (String.IsNullOrEmpty(customer.Email )) returnMessage = returnMessage + "Email ";
-            if(String.IsNullOrEmpty(customer.Password )) returnMessage = returnMessage + "Password ";
+            if (String.IsNullOrEmpty(customer.Password )) returnMessage = returnMessage + "Password ";
             if (String.IsNullOrEmpty(customer.Name )) returnMessage = returnMessage + "Name ";
             if (String.IsNullOrEmpty(customer.FirstName )) returnMessage = returnMessage + "FirstName ";
             if (String.IsNullOrEmpty(customer.Postal_Code )) returnMessage = returnMessage + "PostalCode ";

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SupMagasin.Dal;
 using SupMagasin.Model;
-
+using SupMagasin.Model.ProductModel;
 
 namespace SupMagasin.Controllers
 {
@@ -94,6 +94,15 @@ namespace SupMagasin.Controllers
         {
             _ = dal.AddMultiProduit(newProduits);
         }
+
+        //POST: product/addProdMulti
+        [HttpPost]
+        [Route("addLot/{idProduit}")]
+        public void AddMultiProd(string idProduit,[FromBody] LotsModel lot)
+        {
+            _ = dal.AddLot(idProduit,lot);
+        }
+
         #endregion
 
         #region PUT

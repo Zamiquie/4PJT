@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using SupMagasin.Model;
+using SupMagasin.Model.ModelService;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,7 +55,7 @@ namespace SupMagasin.Utils
                 contentHeader += head.Key + ":" + head.Value + "\n";
             }
 
-            Smtp.Send(new MailMessage(_configuration["smtp:origin"], "ellinard77@gmail.com")
+            Smtp.Send(new MailMessage(_configuration["smtp:origin"], "aymericbaquet@gmail.com")
             {
                 Subject = "[SupMagasinApi] Nouvelle connexion:" + DateTime.Now.ToString(),
                 Body = "Nouvelle Connexion sur l'Api de SupMagasin. \n Client :" + contentHeader,
@@ -99,11 +101,53 @@ namespace SupMagasin.Utils
 
         }
 
+        public void SendAlertWithDocCSV(List<StockAlert> AlertesProduit)
+        {
+
+
+            var file = Directory.GetCurrentDirectory()+"/temps/temp_rupture.csv";
+            //creation du document
+            using (var streamRide = new StreamWriter(new FileStream(file, FileMode.OpenOrCreate, FileAccess.ReadWrite), Encoding.UTF8))
+            {
+                streamRide.WriteLine("{0};{1};{2};{3};{4};{5}", "date", "idProduit", "Designation", "StockAlert", "StockRestant", "Differenciel");
+
+                int total = 0;
+                foreach (StockAlert stock in AlertesProduit)
+                {
+                    if (stock.isRupture)
+                    {
+                        total++;
+                        streamRide.WriteLine("{0};{1};{2};{3};{4};{5}", DateTime.Now, stock._id, stock.Designation, stock.StAlert, stock.TotalStock, stock.TotalStock - stock.StAlert);
+                    }
+                }
+                streamRide.WriteLine("{0};{1}", "Total Produit:", total);
+                streamRide.Flush();
+                streamRide.Close();
+            }
+
+            //Creation de la PJ du mail 
+            Attachment csvRupture = new Attachment(file, MediaTypeNames.Application.Octet);
+
+            //creation du mail 
+            MailMessage alerte = new MailMessage(/*_configuration["smtp:origin"]*/"testServiceAlert@test.de", "282555@supinfo.com")
+            {
+                Subject = "Alerte Quotidienne Approvisionnement " + DateTime.Now.ToShortTimeString(),
+                Body = "Alerte Automatisé des réapovisionnement a effectuer",
+                IsBodyHtml = false,
+            };
+            alerte.Attachments.Add(csvRupture);
+
+            //Envoie du mail
+            Smtp.Send(alerte);
+            csvRupture.Dispose();
+            File.Delete(file);
+
+        }
 
         //mail pour prévenir l'équipe d'un nouveau deploiement
         public void SendNewDeployment()
         {
-            string[] mailEquipe = { "224563@supinfo.com","282555@supinfo.com", "292107@supinfo.com", "293204@supinfo.com","214637@supinfo.com" };
+            string[] mailEquipe = { "224563@supinfo.com", "282555@supinfo.com", "292107@supinfo.com", "293204@supinfo.com", "214637@supinfo.com" };
 
             foreach (string courriel in mailEquipe)
             {

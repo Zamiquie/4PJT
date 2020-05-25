@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RestSharp;
 using SupMagasin.Dal;
+using SupMagasin.Utils;
 
 namespace test
 {
@@ -30,8 +31,6 @@ namespace test
                 .ConfigureServices(services =>
                 {
                     services.AddHostedService<ServiceTest>();
-                    services.AddHostedService<ServiceTestDeux>();
-
                 });
 
         public class ServiceTest : IHostedService, IDisposable
@@ -55,6 +54,10 @@ namespace test
             private void DoWork(object state)
             {
                 DalProduit dal = new DalProduit();
+                var StockAle = dal.GetProduitToOrder().Result;
+                Mailling mailling = new Mailling();
+                mailling.SendAlertWithDocCSV(StockAle);
+                Console.WriteLine("Service running: {0}",DateTime.Now);
 
             }
 

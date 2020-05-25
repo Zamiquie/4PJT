@@ -28,7 +28,6 @@ namespace SupMagasin.Controllers
             _dal = new DalCustomer();
             _configuration = configuration;
         }
-
         #region Get
 
         [HttpGet]
@@ -50,12 +49,11 @@ namespace SupMagasin.Controllers
                     phoneCustDict.Add(phoneMac, custID.Id); 
                 }
             }
-
             //on Log les connextions Bluethooths
             new WriteLog(TypeLog.Bluethoo).WriteFile(string.Join(",",phoneCustDict)+" totalDevice:["+phoneCustDict.Count+"]");
 
             //on enregistrer les nouvelles collections
-            if(System.IO.File.Exists(Directory.GetCurrentDirectory() + @"/temps/bluCust.txt")) { System.IO.File.Delete(Directory.GetCurrentDirectory() + @"/temps/bluCust.txt"); }
+            if(System.IO.File.Exists(Directory.GetCurrentDirectory()+ @"/temps/bluCust.txt")) { System.IO.File.Delete(Directory.GetCurrentDirectory() + @"/temps/bluCust.txt"); }
             using (var streamWriter = new StreamWriter(new FileStream(Directory.GetCurrentDirectory() + @"/temps/bluCust.txt", FileMode.OpenOrCreate, FileAccess.Write), Encoding.UTF8))
             {
                 foreach(var telCu in phoneCustDict)
@@ -70,7 +68,6 @@ namespace SupMagasin.Controllers
         [HttpGet]
         public async Task<IActionResult> IsPresentInShop(string macheck)
         {
-            
             Dictionary<string, string> MacIdCustomer = new Dictionary<string, string>();
             using (var streamRide = new StreamReader(new FileStream(Directory.GetCurrentDirectory() + @"/temps/bluCust.txt", FileMode.OpenOrCreate, FileAccess.Read), Encoding.UTF8))
             {
@@ -84,7 +81,6 @@ namespace SupMagasin.Controllers
                 MacIdCustomer = listMac.ToDictionary(x => x.Split(',')[0], x => x.Split(',')[1]);
                                     
             }
-
             //on regarde si la clé est présente
             if (MacIdCustomer.ContainsKey(macheck))
             {
@@ -96,8 +92,6 @@ namespace SupMagasin.Controllers
             }
         }
         #endregion
-
-
 
     }
 }

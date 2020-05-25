@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using SupMagasin.Model;
 using System;
 using System.Collections.Generic;
@@ -24,10 +25,20 @@ namespace TestMongo
                 }
                
                 var url = "https://www.carrefour.fr/r?noRedirect=1&page=" + x.ToString();
+
+                var httpRequest = new HttpRequestMessage(System.Net.Http.HttpMethod.Get, url);
+                httpRequest.Headers.TryAddWithoutValidation("Accept", "text/html,application/xhtml+xml,application/xml");
+                //httpRequest.Headers.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate");
+                httpRequest.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:19.0) Gecko/20100101 Firefox/19.0");
+                httpRequest.Headers.TryAddWithoutValidation("Accept-Charset", "ISO-8859-1");
+
                 var httpClient = new HttpClient();
-                var html = await httpClient.GetStringAsync(url); // on recupere le contenu de la page
+
+
+                var responseSteam = await httpClient.SendAsync(httpRequest).Result.Content.ReadAsStringAsync();
+                //var html = await httpClient.GetStringAsync(httpRequest); // on recupere le contenu de la page
                 var htmlDocument = new HtmlDocument(); // on creer un nouvel objet HtmlDocument
-                htmlDocument.LoadHtml(html);
+                htmlDocument.LoadHtml(responseSteam);
                 var divs = htmlDocument.DocumentNode.Descendants("article").ToList();
 
                 //var product = new List<Product>();
@@ -45,36 +56,39 @@ namespace TestMongo
                     var PriceKGHtml = div.Descendants("div").Where(kg => kg.GetAttributeValue("class", "") == "ds-body-text ds-body-text--size-s ds-body-text--color-standard-3 product-card-per-unit-label").FirstOrDefault();
                     if (PriceKGHtml != null) { PriceKG = PriceKGHtml.InnerHtml.ToLower().Replace("\n", "").Replace(" ", "_").Remove(0, 5); }
 
-                   /* product.Add(new Product()
-                    {
-                        Denomination = Denomination,
-                        Price = Price,
-                        PriceKG = PriceKG
-                    });*/
+                    /* product.Add(new Product()
+                     {
+                         Denomination = Denomination,
+                         Price = Price,
+                         PriceKG = PriceKG
+                     });*/
 
                     produitToAdd.Add(new Produit()
                     {
                         Designation = Denomination,
                         SalePrice = float.Parse(Price),
-                        Weight  = new Random().Next(1,9),
+                        Weight = new Random().Next(1, 9),
                         Categorie = Categorie.Alimentaire,
                         Gamme = Gamme.Moyen,
-                        Description = Denomination
+                        Description = Denomination,
+                        StockAlert = new Random().Next(1, 99)
 
                     });
-                  /*  foreach (Product prod in product)
-                    {
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write("Crawler Test sur : {0}", "carrefour.fr");
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(" Pr: {0}", prod.Denomination);
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(" P: {0}", prod.Price);
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.Write(" PKg: {0} \n", prod.PriceKG);
-                    }*/
+     
                 }
 
+            }
+
+            foreach(Produit prod in produitToAdd)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("Crawler Test sur : {0}", "carrefour.fr");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(" Pr: {0}", prod.Designation);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write(" P: {0}", prod.BuyPrice);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write(" PKg: {0} \n", prod.Description);
             }
 
             return produitToAdd;

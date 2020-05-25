@@ -32,6 +32,8 @@ namespace SupMagasin.Model
         public Fournisseur Fournisseur { get; set; }
         [BsonElement("Lots")]
         public List<LotsModel> Lots { get; set; }
+        [BsonElement("StockAlert")]
+        public int StockAlert { get; set; }
         [BsonElement("isSaling")]
         public bool IsSaling { get; set; }
         [BsonElement("QrCode")]

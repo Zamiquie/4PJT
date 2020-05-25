@@ -102,7 +102,6 @@ namespace SupMagasin.Controllers
         {
             _ = dal.AddLot(idProduit,lot);
         }
-
         #endregion
 
         #region PUT

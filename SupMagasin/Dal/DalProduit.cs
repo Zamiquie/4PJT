@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using SupMagasin.Dal;
 using SupMagasin.Model;
+using SupMagasin.Model.ModelService;
 using SupMagasin.Model.ProductModel;
 using SupMagasin.Utils;
 using System;
@@ -14,7 +15,7 @@ namespace SupMagasin.Dal
     public class DalProduit : Dal<Produit>
     {
 
-        public DalProduit() : base("Product"){}
+        public DalProduit() : base("Product") { }
 
 
         #region Insert
@@ -29,7 +30,7 @@ namespace SupMagasin.Dal
         public async Task<string> AddMultiProduit(List<Produit> produits)
         {
             //pour chaque on genere un produit
-            foreach(Produit prod in produits) { prod.ID = GenerateId(prod); }
+            foreach (Produit prod in produits) { prod.ID = GenerateId(prod); }
             return await AddListOfElement(produits);
         }
 
@@ -51,16 +52,59 @@ namespace SupMagasin.Dal
         public async Task<string> GetProduitByName(string designation)
         {
             var result = await Collection.FindAsync(pro => pro.Designation == designation);
-            return result.First().ToJson(); 
+            return result.First().ToJson();
         }
 
         //Requete des produits ayant leur stock =< au seuil d'alerte
-       /* public async Task<string> GetProduitToOrder(int stockAlert)
+        public async Task<List<StockAlert>> GetProduitToOrder()
         {
-            var Produit = 
-            
+            //script Bson pour mongoDB
+            var request =
 
-        }*/
+                new BsonDocument("$project",
+                    new BsonDocument
+                        {
+                        //item
+                            { "item", "$_id" },
+                            //isRupture
+                            { "isRupture",
+                                new BsonDocument("$cond",
+                                new BsonDocument
+                                            {
+                                                { "if",
+                                new BsonDocument("$gte",
+                                new BsonArray
+                                                    {
+                                                        "$StockAlert",
+                                                        new BsonDocument("$sum", "$Lots.Stock")
+                                                    }) },
+                                                { "then", true },
+                                                { "else", false }
+                                            }) },
+                            //isNull
+                            { "isNull",
+                                    new BsonDocument("$ifNull",
+                                    new BsonArray
+                                                {
+                                                    "$Lots.Stock",
+                                                    BsonNull.Value
+                                                }) },
+                            //TotalSotk
+                            { "TotalStock",new BsonDocument("$sum", "$Lots.Stock") },
+                        //Designation
+                        {"Designation","$designation"},
+                        //stock Alerte 
+                        {"StAlert","$StAlert" }
+                    }
+
+                );
+ 
+            var pipeline = new[] { request };
+            var underStock = await Collection.Aggregate<StockAlert>(pipeline).ToListAsync();
+
+
+            return underStock;
+        }
 
 
         public async Task<string> GetCommentaryById(string id)
@@ -127,7 +171,7 @@ namespace SupMagasin.Dal
 
             }
         }
-         //Ajout des Commentaires
+        //Ajout des Commentaires
         public async Task<string> AddCommentaire(string id, Commentaire coment)
         {
             //on filtre et on met l'update
@@ -167,13 +211,13 @@ namespace SupMagasin.Dal
 
             }
         }
-        
+
         #region Private 
         //Generation de Id
         private string GenerateId(Produit product)
         {
-            return product.Designation.Substring(0, 3).Replace(' ', 'X') + product.Weight.ToString().Substring(0,1) + new Random().Next(0, 684654564).ToString(); ;
-        } 
+            return product.Designation.Substring(0, 3).Replace(' ', 'X') + product.Weight.ToString().Substring(0, 1) + new Random().Next(0, 684654564).ToString(); ;
+        }
         #endregion
 
     }

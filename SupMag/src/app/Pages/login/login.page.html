@@ -1,0 +1,16 @@
+<ion-content color="tertiary">
+  <div class="center">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title> Connexion</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input [(ngModel)]="mail" type="email" placeholder="E-mail"></ion-input>
+        <ion-input [(ngModel)]="password" type="password" placeholder="Mot de passe"></ion-input>
+        <ion-button (click)="loginWithEmail()">Connexion</ion-button>
+      </ion-card-content>
+    </ion-card>
+    <ion-label> Vous n'avez pas de compte? </ion-label>
+    <ion-label color="primary" (click)="goToRegister()">Inscrivez vous!</ion-label>
+  </div>
+</ion-content>

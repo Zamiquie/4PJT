@@ -1,0 +1,16 @@
+<ion-content color="tertiary">
+  <div class="center">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title> Inscription</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input [(ngModel)]="mail"             type="email"    placeholder="E-mail"></ion-input>
+        <ion-input [(ngModel)]="password"         type="password" placeholder="Mot de passe"></ion-input>
+        <ion-input [(ngModel)]="confirmPassword"  type="password" placeholder="Confirmer le mot de passe"></ion-input>
+        <ion-button (click)="registerWithMail()">Inscription</ion-button>
+      </ion-card-content>
+    </ion-card>
+    <ion-button (click)="returnToLogin()"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
+  </div>
+</ion-content>

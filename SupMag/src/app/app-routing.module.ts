@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { CustomerPage} from "./Pages/customer/customer.page";
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'customer',
     pathMatch: 'full'
   },
   {
@@ -22,22 +23,6 @@ const routes: Routes = [
   {
     path: 'customer',
     loadChildren: () => import('./Pages/customer/customer.module').then( m => m.CustomerPageModule)
-  },
-  {
-    path: 'advertising',
-    loadChildren: () => import('./Pages/advertising/advertising.module').then( m => m.AdvertisingPageModule)
-  },
-  {
-    path: 'scan',
-    loadChildren: () => import('./Pages/scan/scan.module').then( m => m.ScanPageModule)
-  },
-  {
-    path: 'shopping',
-    loadChildren: () => import('./Pages/shopping/shopping.module').then( m => m.ShoppingPageModule)
-  },
-  {
-    path: 'profile',
-    loadChildren: () => import('./Pages/profile/profile.module').then( m => m.ProfilePageModule)
   },
 
 ];

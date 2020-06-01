@@ -5,5 +5,13 @@
 </ion-header>
 
 <ion-content>
+  <app-advert
+          *ngFor="let advert of this.advertService.advertising"
+          title="{{advert.title}}"
+          subtitle="{{advert.subtitle}}"
+          photo="{{advert.photo}}"
+          description="{{advert.description}}"
+  >
+  </app-advert>
 
 </ion-content>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AdvertService} from "../../Services/advert/advert.service";
 
 @Component({
   selector: 'app-advertising',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdvertisingPage implements OnInit {
 
-  constructor() { }
+  constructor(
+      private advertService: AdvertService
+  ) { }
 
   ngOnInit() {
   }

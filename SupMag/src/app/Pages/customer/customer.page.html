@@ -1,9 +1,30 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>customer</ion-title>
-  </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="advertising">
+        <ion-icon name="newspaper-outline"></ion-icon>
+        <ion-label>Bonnes affaires</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="scan">
+        <ion-icon name="qr-code-outline"></ion-icon>
+        <ion-label>QR Code</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="shopping">
+        <ion-icon name="cart-outline"></ion-icon>
+        <ion-label>Mes achats</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="profile">
+        <ion-icon name="person-circle"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 
 </ion-content>
+

@@ -40,7 +40,7 @@ export class AuthentificationService {
                 this.userService.user.token = response.token;
 
                 this.userService.getUserProfile();
-                this.navCtrl.navigateRoot('/home');
+                this.navCtrl.navigateRoot('/customer');
 
                 console.log(this.userService.user);
             },
@@ -86,7 +86,7 @@ export class AuthentificationService {
                   this.userService.user.token = response.token;
 
                   this.userService.getUserProfile();
-                  this.navCtrl.navigateRoot('/home');
+                  this.navCtrl.navigateRoot('/customer');
               },
               error => {
                   console.log(error);

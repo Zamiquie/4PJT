@@ -13,7 +13,9 @@ import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+  ],
   entryComponents: [],
   imports: [BrowserModule,
     IonicModule.forRoot(),
@@ -23,7 +25,9 @@ import {HttpClientModule} from "@angular/common/http";
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+  ],
+  exports: [
   ],
   bootstrap: [AppComponent]
 })

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SupMagasin.Dal;
 using SupMagasin.Model;
+using SupMagasin.Utils;
 using SupSales.Dal;
 
 namespace SupMagasin.Controllers
@@ -50,6 +51,32 @@ namespace SupMagasin.Controllers
             return await Dal.GetSalesByIdUser(iduser);
         }
 
+        //GET : sales/facture/{idSale}
+        [HttpGet("/facture/{idSale}")]
+        public async Task<ActionResult> GetFacturePdf(string idSale)
+        {
+            //on recupere la vente
+            Sale sale = System.Text.Json.JsonSerializer.Deserialize<Sale>(await Dal.GetSaleByID(idSale));
+            //string du fichier
+            string pathFile = Directory.GetCurrentDirectory() + "/Asset/Factures/" + sale.IdShop + "/" + "f" + sale.ID + ".pdf";
+
+            try
+            {
+               //on reupère les bytes du fichier
+               byte[] fileToDowload = System.IO.File.ReadAllBytes(pathFile);
+                return File(fileToDowload, "application/pdf", "facture_" + idSale + ".pdf", false);
+
+            }
+            catch(DirectoryNotFoundException e)
+            {
+                return BadRequest("file not founds. Error code:"+e.Message);
+            }
+            catch(Exception e)
+            {
+                return BadRequest("Erreur interne:"+e.Message);
+            }
+        }
+
         //GET: sales/shop/
         [HttpGet("shop/{id}")]
         public async Task<string> GetSalesByShop(string id)
@@ -62,9 +89,23 @@ namespace SupMagasin.Controllers
         // POST: sales/addsales
         [HttpPost]
         [Route("addsales")]
-        public void Addsales([FromBody] Sale sale)
+        public async Task<IActionResult> Addsales([FromBody] Sale sale)
         {
-            _ = Dal.AddSalesAsync(sale);
+            //enregistrement de la vente
+            await Dal.AddSalesAsync(sale);
+            //récupération des datas liès  la vente
+            DalCustomer dal = new DalCustomer();
+            var customer = System.Text.Json.JsonSerializer.Deserialize<Customer>(await dal.GetCustomerByID(sale.IdCustomer));
+            DalShop dalShop = new DalShop();
+            var shop = System.Text.Json.JsonSerializer.Deserialize<Shop>(await dalShop.GetShopByID(sale.IdShop));
+            //création du document
+            await GenerateDocument.GenerateFacture(sale, customer, shop);
+            //envois d'un email avec facture
+            new Mailling().SendWithHtml(customer.Email);
+
+            //renvois 
+            return Ok(new { message = "bill created" });
+
         }
 
         // POST: sales/addMultisales

@@ -32,7 +32,7 @@ namespace SupMagasin
                     })
                     .ConfigureServices(services =>
                     {
-                        //services.AddHostedService<AlertStockService>();
+                        services.AddHostedService<AlertStockService>();
                     })
                     .ConfigureWebHost(option => 
                     {
@@ -42,7 +42,7 @@ namespace SupMagasin
         }
             
 
-
+        //Alerte Stock
         public class AlertStockService : IHostedService, IDisposable
         {
             private readonly ILogger<AlertStockService> _logger;

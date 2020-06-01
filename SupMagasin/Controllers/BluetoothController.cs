@@ -88,7 +88,7 @@ namespace SupMagasin.Controllers
             }
             else
             {
-                return Ok(new { message = "false" }); 
+                return StatusCode(425,"MAC Adress not found "); 
             }
         }
         #endregion

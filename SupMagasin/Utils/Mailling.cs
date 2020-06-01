@@ -63,7 +63,6 @@ namespace SupMagasin.Utils
             });
 
         }
-
         //mail pour les nouveaux clients
         public void MailToNewCustomer(Customer customer)
         {
@@ -160,6 +159,30 @@ namespace SupMagasin.Utils
 
                 });
             }
+        }
+
+        //mail pour l'envois des factures lors de la vente
+        public void sendFactureByMail(Sale sale,Customer customer)
+        {
+            string pathPj = Directory.GetCurrentDirectory() + "/Asset/Factures/" + sale.IdShop + "/" + "f" + sale.ID + ".pdf";
+            //Création de la PJ
+            Attachment facturePj = new Attachment(pathPj, MediaTypeNames.Application.Octet);
+
+            //création du mail 
+            MailMessage newMail = new MailMessage("supmag@supmagasin.com", customer.Email)
+            {
+                Subject = "[SupMagasin] facture n°f" + sale.ID + " du " + sale.VenteDate,
+                Body = "Bonjour " + customer.FirstName + " " + customer.Name + ","
+                + "\n veuillez trouver-joint à ce mail  la facture de vos achats dans notre magasin."+
+                " \n en esperant vous revoir très bientôt"+
+                "\n Cordialement"
+                +"\n l'équipe SupMagasin"+
+                "Ps: On rembourse pas",
+            };
+            newMail.Attachments.Add(facturePj);
+
+            Smtp.Send(newMail);
+  
         }
     }
 }

@@ -1,50 +1,28 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using MongoDB.Bson.Serialization.IdGenerators;
+using SupMagasin.Dal;
+using SupMagasin.Model;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SupMagasin.Utils
 {
     //Generateur et decription du QrCode pour la generation des produits
-    class QRCodeHandler
+    public class QrCodeHandler
     {
-        public string IdMagasin { get; set; }
-        public string NomProduit { get; set; }
-        public string IdProduit { get; set; }
-        public string NumeroLot { get; set; }
-        public int Key { get; set; }
-
-
-
-        public QRCodeHandler()
-        {
-            IdMagasin = "99";
-            NomProduit = "ProduitTest";
-            IdProduit = "73";
-            NumeroLot = "145555954-1545";
-            Key = 5;
-        }
-
-        /// Construction de l'Object QrHandleerpour la création et le déchifrement du string du QrCode 
-        public QRCodeHandler(string idMagasin, string nomProduit, string idProduit, string numeroLot, int key = 5)
-        {
-            IdMagasin = idMagasin;
-            NomProduit = nomProduit;
-            IdProduit = idProduit;
-            NumeroLot = numeroLot;
-            Key = key;
-        }
+        
 
         //appelle de la methode publique pour la generation du qrCode
-        public string GenerateStringQrCode()
+        public static string GenerateStringQrCode(Produit produit,string idMagasin)
         {
-            string qrCodeString = Encrypte();
-
+            string qrCodeString = Encrypte(produit,idMagasin);
             return qrCodeString;
 
         }
-
         //appelle de la methode pour le decryptage
-        public IDictionary<string, string> DecrypteStringQrCode(string qrString)
+        public static string  DecrypteStringQrCode(string qrString)
         {
             if (qrString == " " || qrString == null || qrString == "  ") throw new Exception("Qr String est null");
             return Decrypte(qrString);
@@ -54,10 +32,10 @@ namespace SupMagasin.Utils
         /*
          * le resultat doit être = "[nombreAleatoire]"+$+data+$+data+n...+[nombreAleatoire]  
          */
-        private string Encrypte()
+        private static string Encrypte(Produit produit,string idMagasin)
         {
             //on recupera la chaine à chiffrer
-            string encrypte = "$" + IdMagasin + "$" + NomProduit + "$" + IdProduit + "$" + NumeroLot + "$";
+            string encrypte = "$" + idMagasin + "$" + produit.Designation + "$" + produit.ID + "$" + produit.Lots.First(lot => lot.Stock != 0) ??"0" + "$";// ?? ternaire pour signaler qu'il n'y pas de lots
             // on instancie 2 variables pour mettre les nombre aléatoires;
             int m1 = 0;
             int m2 = 0;
@@ -91,11 +69,11 @@ namespace SupMagasin.Utils
                 throw new Exception("Message trop Long 300 caractère Max :( .\n votre data fait " + encrypte.Length + " Caractères");
             }
 
-
             return encrypte;
         }
+
         //on décrypte le qrCode et on renvois les données sous forme de dictionnaires
-        private IDictionary<string, string> Decrypte(string qrData)
+        private static string Decrypte(string qrData)
         {
             try
             {
@@ -106,13 +84,14 @@ namespace SupMagasin.Utils
                 element.Add("IdProduit", data[3]);
                 element.Add("NumeroLot", data[4]);
 
-                return element;
+                DalProduit dal = new DalProduit();
+                var product = dal.GetProduitByID(element["idMagasin"]).Result;
+                return product;
             }
             //si données manquantes
             catch (IndexOutOfRangeException e)
             {
-                var errorLecture = new Dictionary<string, string>();
-                errorLecture.Add("ERROR", "Données Manquantes");
+                var errorLecture = "Erreur 500 :"+e.Message;      
                 return errorLecture;
             }
         }

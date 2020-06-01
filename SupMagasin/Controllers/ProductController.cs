@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using SupMagasin.Dal;
 using SupMagasin.Model;
 using SupMagasin.Model.ProductModel;
+using SupMagasin.Utils;
 
 namespace SupMagasin.Controllers
 {
@@ -73,7 +74,12 @@ namespace SupMagasin.Controllers
             var deliveries = await dal.GetDeliveryByIdProduct(id);
             return deliveries;
         }
-
+        //Get : Produit/qrd/{qrString}
+        [HttpGet("/qrd/{qrString}")]
+        public async Task<string> GetProductByQrCode(string qrString)
+        {
+            return QrCodeHandler.DecrypteStringQrCode(qrString);
+        }
         #endregion
 
         #region POST

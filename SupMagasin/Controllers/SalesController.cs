@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using SupMagasin.Dal;
 using SupMagasin.Model;
 using SupMagasin.Utils;
@@ -83,6 +84,15 @@ namespace SupMagasin.Controllers
         {
             return await Dal.GetSalesByIdMagasin(id);
         }
+
+        [HttpGet("/sales/ca")]
+        public string GetCA(DateTime seachBegin,DateTime searchEnd)
+        {
+            
+            if (seachBegin == null) { seachBegin = new DateTime(2020, 01, 01); };
+            if (searchEnd == null) { seachBegin = new DateTime(2099, 01, 01); }
+            return Dal.GetTotalSaleBording(seachBegin, searchEnd).ToJson();
+        }
         #endregion
 
         #region POST
@@ -115,6 +125,7 @@ namespace SupMagasin.Controllers
         {
             _ = Dal.AddMultiSalesAsync(newSales);
         }
+
 
         #endregion
 

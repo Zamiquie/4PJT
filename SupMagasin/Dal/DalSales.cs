@@ -6,6 +6,7 @@ using SupMagasin.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SupSales.Dal
@@ -62,6 +63,15 @@ namespace SupSales.Dal
             return result.ToJson();
         }
 
+        public float GetTotalSaleBording(DateTime searchBegin, DateTime searchEnd)
+        {
+
+            var total = Collection.AsQueryable().Where(ca =>
+            ca.VenteDate <= searchBegin &&
+            ca.VenteDate >= searchEnd).Sum(ca => ca.TotalAmount) ;
+
+            return total;
+        }
         #endregion
 
         #region Update

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -280,6 +281,12 @@ namespace SupMagasin
 
         }
 
+        private static void generateCustomer()
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("https://data.opendatasoft.com/api/records/1.0/search/?dataset=donnees-du-repertoire-national-des-elus%40public&facet=code_sexe&facet=date_de_naissance&facet=libelle_commune&facet=code_departement&facet=nom_dept&facet=nom_epci"); 
+            
+        }
 
         //Function pour prévenir en cas de nouveau déploiement
         private void AlertCoworker()

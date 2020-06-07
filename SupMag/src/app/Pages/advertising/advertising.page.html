@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>advertising</ion-title>
+  <ion-toolbar color="secondary">
+    <ion-title>Les bonnes affaires</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="tertiary">
   <app-advert
           *ngFor="let advert of this.advertService.advertising"
           title="{{advert.title}}"

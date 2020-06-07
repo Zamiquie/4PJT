@@ -39,10 +39,7 @@ export class AuthentificationService {
                 this.userService.user.realyUser = response.realyUser;
                 this.userService.user.token = response.token;
 
-                this.userService.getUserProfile();
-                this.navCtrl.navigateRoot('/customer');
-
-                console.log(this.userService.user);
+                this.userService.getUserProfileAndGoToCustomer();
             },
             error => {
                 console.log(error);
@@ -50,7 +47,7 @@ export class AuthentificationService {
         );
   }
 
-  registerWithEmail(mail: string, password: string){
+  registerWithEmail(formData: User){
       this.userService.user.realyUser = true;
       let url = this.apiService.apiAddress+"/user/create";//on rajoute les suffixes de la connection
 
@@ -58,18 +55,19 @@ export class AuthentificationService {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
       };
+
       let data={
           Id: null,
-          Sexe: 1,
-          Email: mail,
-          Password: password,
-          Name: "test",
-          FirstName: "",
-          BirthdayDay: "0001-01-01T00:00:00",
-          Adress: "",
-          Postal_Code: "",
-          City: "",
-          BanqData: null,
+          Sexe: formData.sexe,
+          Email: formData.login,
+          Password: formData.password,
+          Name: formData.name,
+          FirstName: formData.firstname,
+          BirthDay: formData.birthday.toISOString(),
+          Adress: formData.adress,
+          Postal_Code: formData.postalCode,
+          City: formData.city,
+          RIB: null,
           Phones: null,
           Photo: null,
           Last_Time: new Date().toISOString(),
@@ -85,8 +83,7 @@ export class AuthentificationService {
                   this.userService.user.realyUser = response.realyUser;
                   this.userService.user.token = response.token;
 
-                  this.userService.getUserProfile();
-                  this.navCtrl.navigateRoot('/customer');
+                  this.userService.getUserProfileAndGoToCustomer();
               },
               error => {
                   console.log(error);

@@ -15,9 +15,14 @@ export class User {
     private _adress: string;
     private _postalCode: string;
     private _city: string;
-    private RIBs: Rib[];
-    private phones: Phone[];
-
+    private _rib: object[];
+    private _phones: object[];
+    private _photo: string;
+    private _lastTime: Date;
+    private _annualFrequentation: number;
+    private _panierMoyen: number;
+    private _gooToken: string;
+    private _faceToken: string;
 
     get sexe(): number {
         return this._sexe;
@@ -113,5 +118,70 @@ export class User {
 
     set token(value: string) {
         this._token = value;
+    }
+
+    get lastTime(): Date {
+        return this._lastTime;
+    }
+
+    set lastTime(value: Date) {
+        this._lastTime = value;
+    }
+
+    get annualFrequentation(): number {
+        return this._annualFrequentation;
+    }
+
+    set annualFrequentation(value: number) {
+        this._annualFrequentation = value;
+    }
+
+    get panierMoyen(): number {
+        return this._panierMoyen;
+    }
+
+    set panierMoyen(value: number) {
+        this._panierMoyen = value;
+    }
+
+    get gooToken(): string {
+        return this._gooToken;
+    }
+
+    set gooToken(value: string) {
+        this._gooToken = value;
+    }
+
+    get faceToken(): string {
+        return this._faceToken;
+    }
+
+    set faceToken(value: string) {
+        this._faceToken = value;
+    }
+
+
+    get rib(): object[] {
+        return this._rib;
+    }
+
+    set rib(value: object[]) {
+        this._rib = value;
+    }
+
+    get phones(): object[] {
+        return this._phones;
+    }
+
+    set phones(value: object[]) {
+        this._phones = value;
+    }
+
+    get photo(): string {
+        return this._photo;
+    }
+
+    set photo(value: string) {
+        this._photo = value;
     }
 }

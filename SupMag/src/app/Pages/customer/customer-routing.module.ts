@@ -14,12 +14,12 @@ const routes: Routes = [
           loadChildren: () => import('../advertising/advertising.module').then(m => m.AdvertisingPageModule)
         },
         {
-          path: 'scan',
-          loadChildren: () => import('../scan/scan.module').then(m => m.ScanPageModule)
-        },
-        {
           path: 'shopping',
           loadChildren: () => import('../shopping/shopping.module').then(m => m.ShoppingPageModule)
+        },
+        {
+          path: 'invoices',
+          loadChildren: () => import('../invoices/invoices.module').then( m => m.InvoicesPageModule)
         },
         {
           path: 'profile',

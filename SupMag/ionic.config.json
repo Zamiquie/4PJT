@@ -1,5 +1,7 @@
 {
   "name": "SupMag",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

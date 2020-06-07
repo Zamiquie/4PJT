@@ -5,7 +5,7 @@ import { CustomerPage} from "./Pages/customer/customer.page";
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'customer',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -24,6 +24,7 @@ const routes: Routes = [
     path: 'customer',
     loadChildren: () => import('./Pages/customer/customer.module').then( m => m.CustomerPageModule)
   },
+
 
 ];
 

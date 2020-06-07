@@ -1,9 +1,148 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
+  <ion-toolbar color="secondary">
+    <ion-title>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="tertiary">
+
+<!--  Affichage du profil -->
+
+  <ion-card class="center" *ngIf="userService.modification == false">
+    <ion-card-header>
+      <ion-grid>
+        <ion-row>
+            <ion-icon *ngIf="userService.user.sexe == 1" class="sexe-icon" id="male-icon" name="male-outline"></ion-icon>
+            <ion-icon *ngIf="userService.user.sexe == 2" class="sexe-icon" id="female-icon" name="female-outline"></ion-icon>
+            <ion-avatar class="large-icon center-horizontal">
+              <img src="../../../assets/img/avatar.png" alt="Un avatar">
+            </ion-avatar>
+        </ion-row>
+        <br>
+        <ion-row>
+          <ion-chip *ngIf="userService.user.name != null || userService.user.firstname != null " class="center-horizontal">
+            <ion-label class="large-text name">{{this.userService.user.name}} {{this.userService.user.firstname}}</ion-label>
+          </ion-chip>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid class="center-horizontal fit-content">
+        <ion-row>
+          <ion-label><b>Email :</b> {{this.userService.user.login}} </ion-label>
+        </ion-row>
+        <ion-row *ngIf="this.userService.user.birthday!=null">
+          <ion-label><b>Date de naissance : </b>{{this.userService.user.birthday.toLocaleDateString()}}</ion-label>
+        </ion-row>
+        <ion-row *ngIf="this.userService.user.adress!=null">
+          <ion-label><b>Adresse :</b></ion-label>
+        </ion-row>
+        <ion-row *ngIf="this.userService.user.adress!=null">
+          <ion-label>
+            {{this.userService.user.adress}} <br>
+            {{this.userService.user.city}}, {{this.userService.user.postalCode}}
+          </ion-label>
+        </ion-row>
+        <ion-row><br></ion-row>
+        <ion-row>
+          <ion-button class="center-horizontal" (click)="modifyUser()">Modifier</ion-button>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+<!--  Modifcation du profil -->
+  <ion-card class="center" *ngIf="userService.modification == true">
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="changeUserLabelCol" size="5">
+            <ion-label class="changeUserLabel"><b>Nom :</b></ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-input [(ngModel)]="this.newUser.name" placeholder="Entrez votre nom"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="changeUserLabelCol" size="5">
+            <ion-label class="changeUserLabel"><b>Prénom :</b></ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-input [(ngModel)]="this.newUser.firstname" placeholder="Entrez votre prénom"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="changeUserLabelCol" size="5">
+            <ion-label class="changeUserLabel"><b>Sexe : </b></ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-select [(ngModel)]="this.sexe">
+              <ion-select-option value=1>Homme</ion-select-option>
+              <ion-select-option value=2>Femme</ion-select-option>
+            </ion-select>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="changeUserLabelCol" size="5">
+            <ion-label class="changeUserLabel"><b>Email :</b></ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-input [(ngModel)]="this.newUser.login" placeholder="Entrez votre mail"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="changeUserLabelCol" size="6">
+            <ion-label class="changeUserLabel"><b>Date de naissance :</b></ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-datetime (ionChange)="changeDate($event)" displayFormat="DD/MM/YYYY" value="{{this.newUser.birthday.toDateString()}}"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="changeUserLabelCol" size="5">
+            <ion-label class="changeUserLabel"><b>Adresse :</b></ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-input [(ngModel)]="this.newUser.adress" placeholder="Entrez votre adresse"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="changeUserLabelCol" size="5">
+            <ion-label class="changeUserLabel"><b>Ville :</b></ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-input [(ngModel)]="this.newUser.city"  placeholder="Entrez votre ville"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="changeUserLabelCol" size="5">
+            <ion-label class="changeUserLabel"><b>Code postale :</b></ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-input [(ngModel)]="this.newUser.postalCode"  placeholder="Entrez votre code postal"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-button class="center-horizontal" (click)="saveUser()">Sauvegarder</ion-button>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+
+<!--  <ion-label>{{userService.user.name}} {{userService.user.firstname}}</ion-label>-->
+<!--  <ion-input [(ngModel)]="userService.user.firstname" placeholder="Entrez votre nom"></ion-input>-->
+<!--  <ion-input [(ngModel)]="userService.user.name" placeholder="Entrez votre prénom"></ion-input>-->
+
+
+
+
+
 
 </ion-content>
+
+<ion-footer>
+
+</ion-footer>

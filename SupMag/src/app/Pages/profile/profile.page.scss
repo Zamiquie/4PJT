@@ -1,0 +1,62 @@
+.sexe-icon{
+  position: absolute;
+  font-size: 250%;
+}
+
+.large-text{
+  font-size: 180%;
+}
+
+.name{
+  color: #333;
+}
+
+.large-icon{
+  width: 7em;
+  height: 7em;
+}
+
+#male-icon{
+  color: darkblue;
+  left: 195px;
+}
+
+#female-icon{
+  color: deeppink;
+  top: 85px;
+  left: 195px;
+}
+
+.center {
+  display: block;
+  height: fit-content;
+  width: 95%;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+.center-horizontal{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fit-content{
+  width: fit-content;
+}
+
+.changeUserLabelCol{
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
+
+.changeUserLabel{
+  float: right;
+}
+
+ion-row{
+  margin-bottom: 0;
+  padding-bottom: 0;
+}

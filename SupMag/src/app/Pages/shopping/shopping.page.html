@@ -1,9 +1,40 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>shopping</ion-title>
+<ion-header >
+  <ion-toolbar color="secondary">
+    <ion-title>Mon caddie</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card class="center" *ngIf="this.products.length == 0">
+    <ion-card-content>
+      <ion-text>Votre panier est vide.</ion-text>
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-list class="top">
+    <ion-list-header lines="full">
+      <ion-label class="title-font-size" color="primary">Listes des articles</ion-label>
+      <ion-icon id="trashIcon" color="danger" name="trash-outline"></ion-icon>
+    </ion-list-header>
+    <ion-item *ngFor="let product of this.products">
+      <ion-label>{{product.product.designation}}</ion-label>
+      <ion-label class="priceLabel">{{product.price| number:'1.2-2'}}€</ion-label>
+      <ion-icon (click)="this.deleteOneProduct(product)" name="remove-circle-outline"></ion-icon>
+      <ion-label class="quantityLabel">{{product.quantity}}</ion-label>
+      <ion-icon (click)="this.addOneProduct(product)" name="add-circle-outline"></ion-icon>
+    </ion-item>
+  </ion-list>
+
 
 </ion-content>
+
+<ion-footer class="total-footer">
+  <div class="footer-text center">
+    <ion-text color="primary" >
+      Total : {{this.total | number:'1.2-2'}}€
+    </ion-text>
+  </div>
+  <ion-button size="small" class="addAndPayButton center" (click)="testProductList()">Ajouter</ion-button>
+  <ion-button size="small" class="addAndPayButton center">Payer</ion-button>
+</ion-footer>

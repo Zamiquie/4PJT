@@ -1,0 +1,62 @@
+ion-card{
+  align-content: center;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+}
+
+.total-footer{
+  min-height: 2em;
+  vertical-align: middle;
+}
+
+.title-font-size{
+  font-size: x-large;
+}
+
+.center {
+  margin: auto;
+  top: 50%;
+  bottom:50%;
+  text-align: center;
+}
+
+.top{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.footer-text{
+  display: inline-block;
+  font-size: large;
+  float: left;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  padding-left: 10px;
+}
+
+.addAndPayButton{
+  float: right;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding-right: 10px;
+}
+
+#trashIcon{
+  font-size: xx-large;
+  padding-right: 38px;
+}
+
+.quantityLabel{
+  max-width: 30px;
+  text-align: center;
+}
+
+.priceLabel{
+  max-width: fit-content;
+  padding-right: 10px;
+}
+
+

@@ -1,16 +1,82 @@
 <ion-content color="tertiary">
-  <div class="center">
+  <div>
     <ion-card>
       <ion-card-header>
-        <ion-card-title> Inscription</ion-card-title>
+        <ion-card-title class="center-horizontal"> Inscription</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-input [(ngModel)]="mail"             type="email"    placeholder="E-mail"></ion-input>
-        <ion-input [(ngModel)]="password"         type="password" placeholder="Mot de passe"></ion-input>
-        <ion-input [(ngModel)]="confirmPassword"  type="password" placeholder="Confirmer le mot de passe"></ion-input>
-        <ion-button (click)="registerWithMail()">Inscription</ion-button>
+        <ion-grid>
+          <ion-row>
+            <ion-item class="full-width">
+              <ion-label position="floating">Email</ion-label>
+              <ion-input [(ngModel)]="mail" type="email" placeholder="E-mail"></ion-input>
+            </ion-item>
+          </ion-row>
+          <ion-row>
+            <ion-item class="full-width">
+              <ion-label position="floating">Mot de passe</ion-label>
+              <ion-input [(ngModel)]="password" type="password" placeholder="Mot de passe"></ion-input>
+            </ion-item>
+          </ion-row>
+          <ion-row>
+            <ion-item class="full-width">
+              <ion-label position="floating">Confirmation du mot de passe</ion-label>
+              <ion-input [(ngModel)]="confirmPassword" type="password" placeholder="Confirmer le mot de passe"></ion-input>
+            </ion-item>
+          </ion-row>
+          <ion-row>
+            <ion-item class="full-width">
+              <ion-label position="floating">Nom</ion-label>
+              <ion-input [(ngModel)]="name" type="text" placeholder="Nom"></ion-input>
+            </ion-item>
+          </ion-row>
+          <ion-row>
+            <ion-item class="full-width">
+              <ion-label position="floating">Prénom</ion-label>
+              <ion-input [(ngModel)]="firstname"  placeholder="Prénom" type="text"></ion-input>
+            </ion-item>
+          </ion-row>
+          <ion-row>
+            <ion-item class="full-width">
+              <ion-label position="floating">Sexe</ion-label>
+              <ion-select placeholder="Sexe" [(ngModel)]="sexe">
+                <ion-select-option value=1>Homme</ion-select-option>
+                <ion-select-option value=2>Femme</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-row>
+          <ion-row>
+            <ion-item class="full-width">
+              <ion-label position="floating">Date de naissance</ion-label>
+              <ion-datetime placeholder="Date de naissance" (ionChange)="changeDate($event)" displayFormat="DD/MM/YYYY"></ion-datetime>
+            </ion-item>
+          </ion-row>
+          <ion-row>
+            <ion-item class="full-width">
+              <ion-label position="floating">Adresse</ion-label>
+              <ion-input [(ngModel)]="adresse"  placeholder="Adresse" type="text"></ion-input>
+            </ion-item>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item class="full-width">
+                <ion-label position="floating">Ville</ion-label>
+                <ion-input [(ngModel)]="city"  placeholder="Ville" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="full-width">
+                <ion-label position="floating">Code postal</ion-label>
+                <ion-input [(ngModel)]="postalCode"  placeholder="Code postal" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-button class="center-horizontal" (click)="registerWithMail()">Inscription</ion-button>
+          </ion-row>
+        </ion-grid>
       </ion-card-content>
     </ion-card>
-    <ion-button (click)="returnToLogin()"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
+    <ion-button style="margin-bottom: 20px;" class="center-horizontal" (click)="returnToLogin()"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
   </div>
 </ion-content>

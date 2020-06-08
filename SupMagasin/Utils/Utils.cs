@@ -31,6 +31,7 @@ namespace SupMagasin.Model
     //catégorie produit
     public enum Categorie
     {
+        Null = 0,
         Alimentaire = 1, 
         NewTech = 2, 
         Mobilier = 3

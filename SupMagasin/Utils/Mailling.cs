@@ -155,7 +155,7 @@ namespace SupMagasin.Utils
 
                     Subject = "[API SupMagasin] nouveau deploiment",
                     Body = "Un nouveau deploiement de l'api supMagasin à été faite à " + DateTime.Now.ToString() +
-                "\n\n  L'équipe SupMagasin \n We are the best (on va niquer le game, et .....)"
+                "\n\n  L'équipe SupMagasin \n "
 
                 });
             }
@@ -169,20 +169,18 @@ namespace SupMagasin.Utils
             Attachment facturePj = new Attachment(pathPj, MediaTypeNames.Application.Octet);
 
             //création du mail 
-            MailMessage newMail = new MailMessage("supmag@supmagasin.com", customer.Email)
+            MailMessage newMail = new MailMessage("facturation@supmagasin.com", customer.Email)// customer.Email)
             {
                 Subject = "[SupMagasin] facture n°f" + sale.ID + " du " + sale.VenteDate,
                 Body = "Bonjour " + customer.FirstName + " " + customer.Name + ","
                 + "\n veuillez trouver-joint à ce mail  la facture de vos achats dans notre magasin."+
                 " \n en esperant vous revoir très bientôt"+
                 "\n Cordialement"
-                +"\n l'équipe SupMagasin"+
-                "Ps: On rembourse pas",
+                +"\n l'équipe SupMagasin",
             };
             newMail.Attachments.Add(facturePj);
 
             Smtp.Send(newMail);
-  
         }
     }
 }

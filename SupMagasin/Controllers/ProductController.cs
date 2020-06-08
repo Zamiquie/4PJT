@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using SupMagasin.Dal;
 using SupMagasin.Model;
 using SupMagasin.Model.ProductModel;
 using SupMagasin.Utils;
+using TestMongo;
 
 namespace SupMagasin.Controllers
 {
@@ -39,11 +43,11 @@ namespace SupMagasin.Controllers
         [HttpGet("{id}", Name = "idProduit")]
         public async Task<string> GetAsync(string id)
         {
-            var Produit = await dal.GetProduitByID(id);
-            return Produit;
+            var produit = await dal.GetProduitByID(id);
+            return produit.ToJson();
         }
 
-        // GET: Produit/{name}
+        // GET: Produit/name/{name}
         [HttpGet("name/{designation}", Name = "designation")]
         public async Task<string> GetSearchByName(string designation)
         {
@@ -74,12 +78,35 @@ namespace SupMagasin.Controllers
             var deliveries = await dal.GetDeliveryByIdProduct(id);
             return deliveries;
         }
-        //Get : Produit/qrd/{qrString}
-        [HttpGet("/qrd/{qrString}")]
+
+        //Get : product/qr/decrypte/{qrString}
+        [HttpGet("/qr/decrypte/{qrString}")]
         public async Task<string> GetProductByQrCode(string qrString)
         {
-            return QrCodeHandler.DecrypteStringQrCode(qrString);
+            try
+            {
+                var prod = await dal.GetProduitByID(QrCodeHandler.DecrypteStringQrCode(qrString)); 
+                return prod.ToJson();
+            }
+            catch (Exception e)
+            {
+                return "QrString Invalide : "+e.Message;
+            }
         }
+        
+        //Get : product/qr/encrypte?idProduit=X&idMagasin=x
+        [Route("/qr/crypte")]
+        [HttpGet]
+        public async Task<string> GetQrCodeByProduit(string idProduit,string idMagasin)
+        {
+            var produit = await dal.GetProduitByID(idProduit);
+            string qrCode = QrCodeHandler.GenerateStringQrCode(produit, idMagasin);
+
+            return qrCode;
+        }
+
+
+
         #endregion
 
         #region POST

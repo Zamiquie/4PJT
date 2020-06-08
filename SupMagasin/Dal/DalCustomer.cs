@@ -45,10 +45,10 @@ namespace SupMagasin.Dal
 
         //region d'interrogation des données
         #region Query
-        public async Task<string> GetCustomerByID(string id)
+        public async Task<Customer> GetCustomerByID(string id)
         {
-            var list = await QueryElementById();
-            return list.Where(cu => cu.Id == id).ToJson();
+            return await QueryElementById(id);
+            
         }
         
         public async Task<string> GetAllCustomer()
@@ -135,6 +135,8 @@ namespace SupMagasin.Dal
             var filter = Builders<Customer>.Filter.Eq("_id", id);
             var update = Builders<Customer>.Update.Push<PhoneModel>(enf => enf.Phones, phoneModel );
 
+            //L'ID est le mac
+            phoneModel.ID = phoneModel.MAC;
             try
             {
                 await Collection.UpdateManyAsync(filter, update);

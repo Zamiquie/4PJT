@@ -41,7 +41,8 @@ namespace SupMagasin.Controllers
         [HttpGet("{id}", Name = "Get")]
         public async Task<string> Get(string id)
         {
-            return await dal.GetCustomerByID(id);
+            var currentCustomer = await dal.GetCustomerByID(id);
+            return currentCustomer.ToJson();
         }
 
 
@@ -57,6 +58,7 @@ namespace SupMagasin.Controllers
         public async Task<string> GetPhones(string id)
         {
             return await dal.GetAllPhonesCustomer(id);
+
         }
         #endregion
 
@@ -76,6 +78,15 @@ namespace SupMagasin.Controllers
         {
             _ = dal.AddLotCustomerAsync(newCustomers);
         }
+
+        [HttpPost]
+        [Route("/{idCustomer}/AddTelephone")]
+        public void AddPhoneOnUser([FromBody] PhoneModel phone,string idCustomer)
+        {
+            _ = dal.AddPhones(idCustomer, phone);   
+        }
+
+
 
         #endregion
 

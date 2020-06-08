@@ -41,7 +41,8 @@ namespace SupMagasin.Controllers
         [HttpGet("{id}")]
         public async Task<string> Get(string id)
         {
-            return await Dal.GetSaleByID(id);
+            var currentSale = await Dal.GetSaleByID(id);
+            return currentSale.ToJson() ;
         }
 
 
@@ -49,7 +50,8 @@ namespace SupMagasin.Controllers
         [HttpGet("user/{iduser}")]
         public async Task<string> GetSaleByUser(string iduser)
         {
-            return await Dal.GetSalesByIdUser(iduser);
+            var result = await Dal.GetSalesByIdUser(iduser);
+            return result.ToJson() ;
         }
 
         //GET : sales/facture/{idSale}
@@ -57,7 +59,7 @@ namespace SupMagasin.Controllers
         public async Task<ActionResult> GetFacturePdf(string idSale)
         {
             //on recupere la vente
-            Sale sale = System.Text.Json.JsonSerializer.Deserialize<Sale>(await Dal.GetSaleByID(idSale));
+            Sale sale = await Dal.GetSaleByID(idSale);
             //string du fichier
             string pathFile = Directory.GetCurrentDirectory() + "/Asset/Factures/" + sale.IdShop + "/" + "f" + sale.ID + ".pdf";
 
@@ -102,19 +104,18 @@ namespace SupMagasin.Controllers
         public async Task<IActionResult> Addsales([FromBody] Sale sale)
         {
             //enregistrement de la vente
-            await Dal.AddSalesAsync(sale);
+            var saleFinish = await Dal.AddSalesAsync(sale);
             //récupération des datas liès  la vente
             DalCustomer dal = new DalCustomer();
-            var customer = System.Text.Json.JsonSerializer.Deserialize<Customer>(await dal.GetCustomerByID(sale.IdCustomer));
+            var customer = await dal.GetCustomerByID(sale.IdCustomer);
             DalShop dalShop = new DalShop();
-            var shop = System.Text.Json.JsonSerializer.Deserialize<Shop>(await dalShop.GetShopByID(sale.IdShop));
+            var shop = await dalShop.GetShopByID(sale.IdShop);
             //création du document
             await GenerateDocument.GenerateFacture(sale, customer, shop);
             //envois d'un email avec facture
-            new Mailling().SendWithHtml(customer.Email);
-
+            new Mailling().sendFactureByMail(sale, customer);
             //renvois 
-            return Ok(new { message = "bill created" });
+            return Ok(new { message = "ID Sale :"+ saleFinish });
 
         }
 
@@ -125,7 +126,6 @@ namespace SupMagasin.Controllers
         {
             _ = Dal.AddMultiSalesAsync(newSales);
         }
-
 
         #endregion
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using SupMagasin.Dal;
 using SupMagasin.Model;
@@ -41,7 +42,7 @@ namespace SupMagasin.Controllers
         public async Task<string> GetAsync(string id)
         {
             var Magasin = await dal.GetShopByID(id);
-            return Magasin;
+            return Magasin.ToJson();
         }
 
         [HttpGet("{id}/work", Name = "getWorkers")]

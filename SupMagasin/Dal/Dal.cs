@@ -25,7 +25,7 @@ namespace SupMagasin.Dal
  
         public Dal(string collectionName)
         {
-            Client = new MongoClient(ConnectionMongo.Laptop);
+            Client = new MongoClient(ConnectionMongo.ServeurProd);
             Database = Client.GetDatabase("SupMagasin");
 
             //si on debug on supprime la collection
@@ -95,17 +95,17 @@ namespace SupMagasin.Dal
         }
 
         //Query Element By Id (a verifier)
-        protected async Task<List<T>> QueryElementById()
+        protected async Task<T> QueryElementById(string id)
         {
             try
             {
-                var list = await Collection.Find<T>(_ => true).ToListAsync();
-                return list;
+                var element = await Collection.Find<T>(Builders<T>.Filter.Eq("_id",id)).FirstOrDefaultAsync();
+                return element;
             }
             catch (Exception e)
             {
                 new WriteLog(TypeLog.MangoDb).WriteFile(e.Message);
-                return new List<T>();
+                return default(T);
 
             }
         }

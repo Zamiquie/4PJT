@@ -31,13 +31,15 @@ namespace SupMagasin.Controllers
         #region Get
 
         [HttpGet]
-        public async Task<IActionResult> ControlBluetooth(string code, string phones)
+        public async Task<IActionResult> ControlBluetooth(string code, string phones,string idMagasin)
         {
-            //si different de la clé on renvois un 421. Histoire de brouiller les pistes 
-            if (code == null || code != _configuration["Borne:key"]) return StatusCode(421,"Key not correspond. Are you Porcinet ?");
+            //si different de la clé on renvois un 421. Histoire de brouiller les pistes , si Pas de renseignement IdMagasin on rejette
+            if (code == null || code != _configuration["Borne:key"]) return StatusCode(421,"Key not correspond.");
+            if (idMagasin == null || idMagasin == String.Empty) return StatusCode(422, "IdMagasin is empty.");
             if (phones == null) return StatusCode(420, "Phones attibuts is empty");
             //on recherche les Id des personnes présentes
             Dictionary<string, string> phoneCustDict = new Dictionary<string, string>();
+            phoneCustDict.Add("IdMagasin", idMagasin);
             foreach(var phoneMac in phones.Split('|'))
             {
                 var custID = _dal.GetCustomerByMacTelephone(phoneMac).Result;
@@ -50,7 +52,7 @@ namespace SupMagasin.Controllers
                 }
             }
             //on Log les connextions Bluethooths
-            new WriteLog(TypeLog.Bluethoo).WriteFile(string.Join(",",phoneCustDict)+" totalDevice:["+phoneCustDict.Count+"]");
+            new WriteLog(TypeLog.Bluethoo).WriteFile(string.Join(",",phoneCustDict)+" totalDevice:["+phoneCustDict.Count+"]" );
 
             //on enregistrer les nouvelles collections
             if(System.IO.File.Exists(Directory.GetCurrentDirectory()+ @"/temps/bluCust.txt")) { System.IO.File.Delete(Directory.GetCurrentDirectory() + @"/temps/bluCust.txt"); }
@@ -84,7 +86,9 @@ namespace SupMagasin.Controllers
             //on regarde si la clé est présente
             if (MacIdCustomer.ContainsKey(macheck))
             {
-                return Ok(new { message = "true" });
+                //possibilité de creer une promo ??
+
+                return Ok(new { idMagasin =MacIdCustomer["idMagasin"] });
             }
             else
             {

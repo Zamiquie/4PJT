@@ -38,10 +38,10 @@ namespace SupMagasin.Dal
             return  QueryAllElement().Result;
         }
 
-        public async Task<string> GetShopByID(string id)
+        public async Task<Shop> GetShopByID(string id)
         {
-            var list = await QueryElementById();
-            return list.Where(mag => mag.ID == id).ToJson();
+            return await QueryElementById(id);
+            
         }
 
         public async Task<string> GetShopByCity(string city =null,string postalCode =null)

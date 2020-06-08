@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SupMagasin.Utils
 {
@@ -22,10 +23,11 @@ namespace SupMagasin.Utils
 
         }
         //appelle de la methode pour le decryptage
-        public static string  DecrypteStringQrCode(string qrString)
+        public static string DecrypteStringQrCode(string qrString)
         {
             if (qrString == " " || qrString == null || qrString == "  ") throw new Exception("Qr String est null");
-            return Decrypte(qrString);
+            
+            return  Decrypte(qrString);
         }
 
 
@@ -84,9 +86,7 @@ namespace SupMagasin.Utils
                 element.Add("IdProduit", data[3]);
                 element.Add("NumeroLot", data[4]);
 
-                DalProduit dal = new DalProduit();
-                var product = dal.GetProduitByID(element["idMagasin"]).Result;
-                return product;
+                return element["IdProduit"];
             }
             //si données manquantes
             catch (IndexOutOfRangeException e)

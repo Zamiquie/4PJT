@@ -20,7 +20,8 @@ namespace SupSales.Dal
         public async Task<string> AddSalesAsync(Sale newSales)
         {
             newSales.ID = GenerateId(newSales);
-            return await AddElement(newSales);
+            await AddElement(newSales);
+            return newSales.ID ;
         }
 
         //Insert Multi Sales
@@ -39,16 +40,16 @@ namespace SupSales.Dal
             return QueryAllElement().Result;
         }
 
-        public async Task<string> GetSaleByID(string id)
+        public async Task<Sale> GetSaleByID(string id)
         {
-            var list = await QueryElementById();
-            return list.Where(sal => sal.ID == id).ToJson();
+            return await QueryElementById(id);
+          
         }
 
-        public async Task<string> GetSalesByIdUser(string idUser)
+        public async Task<List<Sale>> GetSalesByIdUser(string idUser)
         {
             var result = await Collection.Find(sal => sal.IdCustomer == idUser).ToListAsync();
-            return result.ToJson();
+            return result;
         }
 
         public async Task<string> GetSalesByIdProduit(string idProduit)

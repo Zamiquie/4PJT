@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using MongoDB;
-using MongoDB.Bson;
-using MongoDB.Bson.IO;
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
 using SupMagasin.Dal;
 using SupMagasin.Model;
-using SupMagasin.Model.CustomerModel;
-using SupMagasin.Model.ProductModel;
-using SupMagasin.Model.ShopModel;
 using SupMagasin.Utils;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using SupSales.Dal;
 
 namespace TestMongo
 {
@@ -23,41 +18,68 @@ namespace TestMongo
     {
         static async Task Main(string[] args)
         {
-            DalProduit dal = new DalProduit();
-            var produit = JsonSerializer.Deserialize<Produit>(await dal.GetProduitByID("bag1485290176"));
+            //enregistrement de la vente
+            DalSales dalSales = new DalSales();
+     
 
-            var qrCode = QrCodeHandler.GenerateStringQrCode(produit, "Mag5");
+            var listProduct = new List<SaleProduct>();
+            listProduct.Add(new SaleProduct()
+            {
+                AmountPromo = 0,
+                Quantite = 5, 
+                PU = 3.99f,
+                IDProduct = "Man0423555934"
+            });
 
-            Console.WriteLine("QrCode : ", qrCode);
-
-            var produitAfter = QrCodeHandler.DecrypteStringQrCode(qrCode);
-
-            Console.WriteLine("Produit : {0}", produitAfter.ToJson());
-
-
-
-
-
-
-
-
-        /*  #region Crawler Carrefour
-             DateTime start = DateTime.Now;
-             DalProduit dal = new DalProduit();
-             try
-             {
-                 var products = await CrawlerDistribution.CarrefourAsync();
-                 await dal.AddMultiProduit(products);
-             }
-             catch (HttpRequestException e)
-             {
-                 Console.WriteLine("Carrefour bloque la connexion : \n {0}",e.Message);
-             }
+            var sale = new Sale()
+            {
+                IdCustomer = "25XPJ74",
+                IdPhone = "PH01",
+                IdShop = "Mag737044",
+                ProduitVente = listProduct,
+                TotalAmount = listProduct.Sum(pr => pr.Quantite * pr.PU),
+                isPayed = true,
+                VenteDate = DateTime.Now
+            };
 
 
-             TimeSpan rest = DateTime.Now - start;
-             Console.WriteLine("Programme exectué en {0}", rest);
-            #endregion*/
+            var saleFinish = await dalSales.AddSalesAsync(sale);
+            //récupération des datas liès  la vente
+            DalCustomer dal = new DalCustomer();
+            var customer = await dal.GetCustomerByID(sale.IdCustomer);
+            DalShop dalShop = new DalShop();
+            var shop = await dalShop.GetShopByID(sale.IdShop);
+            //création du document
+            await GenerateDocument.GenerateFacture(sale, customer, shop);
+            //envois d'un email avec facture
+            new Mailling().sendFactureByMail(sale,customer);
+
+            //renvois 
+           
+
+
+
+
+
+
+
+            /*  #region Crawler Carrefour
+                 DateTime start = DateTime.Now;
+                 DalProduit dal = new DalProduit();
+                 try
+                 {
+                     var products = await CrawlerDistribution.CarrefourAsync();
+                     await dal.AddMultiProduit(products);
+                 }
+                 catch (HttpRequestException e)
+                 {
+                     Console.WriteLine("Carrefour bloque la connexion : \n {0}",e.Message);
+                 }
+
+
+                 TimeSpan rest = DateTime.Now - start;
+                 Console.WriteLine("Programme exectué en {0}", rest);
+                #endregion*/
 
         }
         

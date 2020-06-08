@@ -15,7 +15,7 @@ namespace SupMagasin.Utils
 {
     public class GenerateDocument
     {
-        public static string Path = Directory.GetCurrentDirectory() + "/Asset/DocumentTemplate/BillTemplate.html"; 
+        public static string Path = Directory.GetCurrentDirectory() + @"/../../Asset/DocumentTemplate/BillTemplate.html"; 
 
 
         public static async Task GenerateFacture(Sale sale,Customer customer,Shop shop)
@@ -41,6 +41,7 @@ namespace SupMagasin.Utils
             template = template.Replace("[[address_customer]]",customer.Adress);
             template = template.Replace("[[postal_code_customer]]", customer.Postal_Code);
             template = template.Replace("[[city_customer]]",customer.City);
+            template = template.Replace("[[customer_email]]", customer.Email);
 
             //(jour et id de la date)
             template = template.Replace("[[id_facture]]", sale.ID);
@@ -50,7 +51,7 @@ namespace SupMagasin.Utils
             DalProduit dal = new DalProduit();
             foreach (SaleProduct produit in sale.ProduitVente)
             {
-               var currendProd = JsonSerializer.Deserialize<Produit>(await dal.GetProduitByID(produit.IDProduct));
+               var currendProd = await dal.GetProduitByID(produit.IDProduct);
                 template = template.Replace("[[detail_produit]]",
                     "<tr>" +
                         "<td>" +produit.IDProduct+"</td>" +
@@ -75,9 +76,9 @@ namespace SupMagasin.Utils
             var Pdf = Render.RenderHtmlAsPdf(template);
             //on creer le repertoire si il n'existe pas 
             if (!Directory.Exists(Directory.GetCurrentDirectory() + "/Asset/Factures/" + shop.ID))
-            {
-                Directory.CreateDirectory(Directory.GetCurrentDirectory() + "Asset/Factures/" + shop.ID);
-            }
+             {
+                 Directory.CreateDirectory(Directory.GetCurrentDirectory() + "Asset/Factures/" + shop.ID);
+             }
 
             string Outpath = Directory.GetCurrentDirectory() + "/Asset/Factures/" + shop.ID+"/"+"f"+sale.ID+".pdf";
             Pdf.SaveAs(Outpath);

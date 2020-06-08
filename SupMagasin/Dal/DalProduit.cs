@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.IO;
 using MongoDB.Driver;
 using SupMagasin.Dal;
 using SupMagasin.Model;
@@ -43,10 +44,10 @@ namespace SupMagasin.Dal
             return await QueryAllElement();
         }
 
-        public async Task<string> GetProduitByID(string id)
+        public async Task<Produit> GetProduitByID(string id)
         {
-            var list = await QueryElementById();
-            return list.Where(mag => mag.ID == id).ToJson();
+             return await QueryElementById(id);
+
         }
 
         public async Task<string> GetProduitByName(string designation)

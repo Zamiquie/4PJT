@@ -33,6 +33,7 @@ namespace SupMagasin
                     .ConfigureServices(services =>
                     {
                         services.AddHostedService<AlertStockService>();
+                        //?? creation du service de promo
                     })
                     .ConfigureWebHost(option => 
                     {

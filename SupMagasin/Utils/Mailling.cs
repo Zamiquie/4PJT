@@ -171,7 +171,7 @@ namespace SupMagasin.Utils
             //création du mail 
             MailMessage newMail = new MailMessage("facturation@supmagasin.com", customer.Email)// customer.Email)
             {
-                Subject = "[SupMagasin] facture n°f" + sale.ID + " du " + sale.VenteDate,
+                Subject = "[SupMagasin] facture n°f" + sale.ID + " du " + sale.SaleDate,
                 Body = "Bonjour " + customer.FirstName + " " + customer.Name + ","
                 + "\n veuillez trouver-joint à ce mail  la facture de vos achats dans notre magasin."+
                 " \n en esperant vous revoir très bientôt"+

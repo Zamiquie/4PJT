@@ -54,7 +54,7 @@ namespace SupSales.Dal
 
         public async Task<string> GetSalesByIdProduit(string idProduit)
         {
-            var result = await Collection.Find(sal => sal.ProduitVente.Any(i => i.IDProduct == idProduit)).ToListAsync();
+            var result = await Collection.Find(sal => sal.ProduitsSales.Any(i => i.IdProduct == idProduit)).ToListAsync();
             return result.ToJson();
         }
 
@@ -68,8 +68,8 @@ namespace SupSales.Dal
         {
 
             var total = Collection.AsQueryable().Where(ca =>
-            ca.VenteDate <= searchBegin &&
-            ca.VenteDate >= searchEnd).Sum(ca => ca.TotalAmount) ;
+            ca.SaleDate <= searchBegin &&
+            ca.SaleDate >= searchEnd).Sum(ca => ca.TotalAmount) ;
 
             return total;
         }
@@ -101,7 +101,7 @@ namespace SupSales.Dal
         {
             //on filtre et on met
             var filter = Builders<Sale>.Filter.Eq("_id", id);
-            var update = Builders<Sale>.Update.Push(sal => sal.ProduitVente, productSale);
+            var update = Builders<Sale>.Update.Push(sal => sal.ProduitsSales, productSale);
 
             try
             {
@@ -122,7 +122,7 @@ namespace SupSales.Dal
 
         private string GenerateId(Sale newSales)
         {
-            return newSales.VenteDate.ToString("dd_MM_yy_HH_mm") + newSales.IdCustomer+newSales.IdShop;
+            return newSales.SaleDate.ToString("dd_MM_yy_HH_mm") + newSales.IdCustomer+newSales.IdShop;
         }
 
         #endregion

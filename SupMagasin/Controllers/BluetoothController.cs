@@ -33,9 +33,11 @@ namespace SupMagasin.Controllers
         [HttpGet]
         public async Task<IActionResult> ControlBluetooth(string code, string phones,string idMagasin)
         {
+            DalShop dalShop = new DalShop();
+           
             //si different de la clé on renvois un 421. Histoire de brouiller les pistes , si Pas de renseignement IdMagasin on rejette
             if (code == null || code != _configuration["Borne:key"]) return StatusCode(421,"Key not correspond.");
-            if (idMagasin == null || idMagasin == String.Empty) return StatusCode(422, "IdMagasin is empty.");
+            if (idMagasin == null || idMagasin == String.Empty || await dalShop.GetShopByID(idMagasin) == null) return StatusCode(422, "IdMagasin is empty.");
             if (phones == null) return StatusCode(420, "Phones attibuts is empty");
             //on recherche les Id des personnes présentes
             Dictionary<string, string> phoneCustDict = new Dictionary<string, string>();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -16,7 +17,7 @@ namespace SupMagasin.Controllers
 {
     [Route("sales")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [EnableCors(PolicyName = "PolicyFrontEnd")]
     public class SalesController : ControllerBase
     {
@@ -51,7 +52,9 @@ namespace SupMagasin.Controllers
         public async Task<string> GetSaleByUser(string iduser)
         {
             var result = await Dal.GetSalesByIdUser(iduser);
-            return result.ToJson() ;
+            result = result.OrderByDescending(fac => fac.SaleDate).ToList();
+            return result.ToJson();
+            
         }
 
         //GET : sales/facture/{idSale}

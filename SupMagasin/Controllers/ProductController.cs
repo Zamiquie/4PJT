@@ -17,7 +17,7 @@ namespace SupMagasin.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [EnableCors(PolicyName = "PolicyFrontEnd")]
     public class ProductController : ControllerBase
     {

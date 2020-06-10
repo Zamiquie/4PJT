@@ -15,7 +15,7 @@ namespace SupMagasin.Utils
 {
     public class GenerateDocument
     {
-        public static string Path = Directory.GetCurrentDirectory() + @"/../../Asset/DocumentTemplate/BillTemplate.html"; 
+        public static string Path = Directory.GetCurrentDirectory() + @"/Asset/DocumentTemplate/BillTemplate.html"; 
 
 
         public static async Task GenerateFacture(Sale sale,Customer customer,Shop shop)
@@ -45,28 +45,28 @@ namespace SupMagasin.Utils
 
             //(jour et id de la date)
             template = template.Replace("[[id_facture]]", sale.ID);
-            template = template.Replace("[[date_facture]]", sale.VenteDate.ToString(""));
+            template = template.Replace("[[date_facture]]", sale.SaleDate.ToString(""));
 
             //Detail Facture
             DalProduit dal = new DalProduit();
-            foreach (SaleProduct produit in sale.ProduitVente)
+            foreach (SaleProduct produit in sale.ProduitsSales)
             {
-               var currendProd = await dal.GetProduitByID(produit.IDProduct);
+               var currendProd = await dal.GetProduitByID(produit.IdProduct);
                 template = template.Replace("[[detail_produit]]",
                     "<tr>" +
-                        "<td>" +produit.IDProduct+"</td>" +
+                        "<td>" +produit.IdProduct+"</td>" +
                         "<td>" +currendProd.Designation +"</td>" +
-                        "<td>" +produit.Quantite+ "</td>" +
-                        "<td>" +produit.PU +"</td>" +
+                        "<td>" +produit.Quantity+ "</td>" +
+                        "<td>" +produit.UnitPrice +"</td>" +
                         "<td>" +produit.AmountPromo +"</td>" +
-                        "<td>" +produit.Quantite*(produit.PU-produit.AmountPromo)+"</td>" +
+                        "<td>" +produit.Quantity*(produit.UnitPrice-produit.AmountPromo)+"</td>" +
                     "</tr>" +
                     "[[detail_produit]]"
                     );
             }
             template = template.Replace("[[detail_produit]]", "");
 
-            template = template.Replace("[[produit_totaux]]", sale.ProduitVente.Sum(pr => pr.Quantite).ToString());
+            template = template.Replace("[[produit_totaux]]", sale.ProduitsSales.Sum(pr => pr.Quantity).ToString());
             template = template.Replace("[[total_price]]", sale.TotalAmount.ToString());
 
 
@@ -77,7 +77,7 @@ namespace SupMagasin.Utils
             //on creer le repertoire si il n'existe pas 
             if (!Directory.Exists(Directory.GetCurrentDirectory() + "/Asset/Factures/" + shop.ID))
              {
-                 Directory.CreateDirectory(Directory.GetCurrentDirectory() + "Asset/Factures/" + shop.ID);
+                 Directory.CreateDirectory(Directory.GetCurrentDirectory() + "/Asset/Factures/" + shop.ID);
              }
 
             string Outpath = Directory.GetCurrentDirectory() + "/Asset/Factures/" + shop.ID+"/"+"f"+sale.ID+".pdf";

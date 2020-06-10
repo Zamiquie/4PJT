@@ -71,9 +71,9 @@ namespace TestIA
                 //receptacle des id des produits
                 var produitPromos = new List<string>();
                 //var de test
-                var ProduitPlusFrequent = salesByCustomer.Select(pr => pr.ProduitVente.GroupBy(pv => pv.IDProduct).OrderByDescending(pr => pr.Count()).FirstOrDefault());
-                var ProduitLePlusAchete = salesByCustomer.Select(pr => pr.ProduitVente.GroupBy(pv => pv.Quantite).OrderByDescending(pr => pr.Count()).FirstOrDefault());
-                var ProduitLePlusCherAchete = salesByCustomer.Select(pr => pr.ProduitVente.Max(pv => pv.PU)).First();
+                var ProduitPlusFrequent = salesByCustomer.Select(pr => pr.ProduitsSales.GroupBy(pv => pv.IdProduct).OrderByDescending(pr => pr.Count()).FirstOrDefault());
+                var ProduitLePlusAchete = salesByCustomer.Select(pr => pr.ProduitsSales.GroupBy(pv => pv.Quantity).OrderByDescending(pr => pr.Count()).FirstOrDefault());
+                var ProduitLePlusCherAchete = salesByCustomer.Select(pr => pr.ProduitsSales.Max(pv => pv.UnitPrice)).First();
 
 
 

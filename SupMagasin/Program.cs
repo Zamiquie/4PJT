@@ -32,14 +32,13 @@ namespace SupMagasin
                     })
                     .ConfigureServices(services =>
                     {
-                        services.AddHostedService<AlertStockService>();
+                        //services.AddHostedService<AlertStockService>();
                         //?? creation du service de promo
                     })
                     .ConfigureWebHost(option => 
                     {
-                        option.UseUrls("http://*:15403");
-                    }
-                    );
+                       option.UseUrls("http://192.168.1.39:15403");
+                    });
         }
             
 

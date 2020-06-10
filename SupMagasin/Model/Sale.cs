@@ -12,7 +12,7 @@ namespace SupMagasin.Model
         [BsonRepresentation(MongoDB.Bson.BsonType.String)]
         public string ID { get; set; }
         [BsonElement("SaleDate")]
-        public DateTime VenteDate { get; set; }
+        public DateTime SaleDate { get; set; }
         [BsonElement("IdPhone")]
         public string IdPhone { get; set; }
         [BsonElement("IdCustomer")]
@@ -24,6 +24,6 @@ namespace SupMagasin.Model
         [BsonElement("isPayed")]
         public bool isPayed { get; set; }
         [BsonElement("ProduitsSales")]
-        public List<SaleProduct> ProduitVente { get; set; }
+        public List<SaleProduct> ProduitsSales { get; set; }
     }
 }

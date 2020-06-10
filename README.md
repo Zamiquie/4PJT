@@ -36,6 +36,11 @@ Creation outils :
 - Ajout Avertissement Mail pour mise en prod
 - Ajout champs "GoToken" et "FaceToken" sur Customer
 - Ajout Dossier "temps" pour les fichiers ne restants pas longtemps sur le serveur
+## Le 08/06/2020 by Zamiquie : 
+- Ajout template facture 
+- ajout generation facture
+- Ajout envois facture à customer
+- Ajout generation temp Promo
 
 
 

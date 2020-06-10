@@ -4,13 +4,15 @@ export class ProductListItem {
     private _product: Product;
     private _quantity: number;
     private _price: number;
+    private _amountPromo: number;
 
-    constructor(product: Product, quantity: number) {
+
+    constructor(product: Product, quantity: number, amountPromo: number = 0) {
         this._product = product;
         this._quantity = quantity;
-        this._price = this.product.price * quantity
+        this._amountPromo = amountPromo;
+        this._price = this.product.price * this.quantity - this.amountPromo;
     }
-
 
     get product(): Product {
         return this._product;
@@ -36,6 +38,14 @@ export class ProductListItem {
         this._price = value;
     }
 
+    get amountPromo(): number {
+        return this._amountPromo;
+    }
+
+    set amountPromo(value: number) {
+        this._amountPromo = value;
+    }
+
     public addOne(){
         this.quantity += 1;
         this.updatePrice();
@@ -44,9 +54,7 @@ export class ProductListItem {
     public deleteOne(){
         this.quantity -= 1;
         this.updatePrice();
-        if (this.quantity == 0){
-            return true;
-        }else return false
+        return this.quantity == 0;
     }
 
     public updatePrice(){

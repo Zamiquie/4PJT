@@ -40,20 +40,20 @@ export class UserService {
                 console.log(response);
                 let jsonResponse = JSON.parse(response);
                 console.log(jsonResponse);
-                this.user.sexe = jsonResponse[0].Sexe;
-                this.user.password = jsonResponse[0].Password;
-                this.user.name = jsonResponse[0].Name;
-                this.user.firstname = jsonResponse[0].FirstName;
-                this.user.birthday = new Date(jsonResponse[0].BirthDay);
-                this.user.adress = jsonResponse[0].Adress;
-                this.user.postalCode = jsonResponse[0].Postal_Code;
-                this.user.city = jsonResponse[0].City;
-                this.user.rib = jsonResponse[0].RIB;
-                this.user.phones = jsonResponse[0].Phones;
-                this.user.photo = jsonResponse[0].Photo;
-                this.user.lastTime = new Date(jsonResponse[0].Last_Time);
-                this.user.annualFrequentation = jsonResponse[0].AnnualFrequentation;
-                this.user.panierMoyen = jsonResponse[0].PanierMoyen;
+                this.user.sexe = jsonResponse.Sexe;
+                this.user.password = jsonResponse.Password;
+                this.user.name = jsonResponse.Name;
+                this.user.firstname = jsonResponse.FirstName;
+                this.user.birthday = new Date(jsonResponse.BirthDay);
+                this.user.adress = jsonResponse.Adress;
+                this.user.postalCode = jsonResponse.Postal_Code;
+                this.user.city = jsonResponse.City;
+                this.user.rib = jsonResponse.RIB;
+                this.user.phones = jsonResponse.Phones;
+                this.user.photo = jsonResponse.Photo;
+                this.user.lastTime = new Date(jsonResponse.Last_Time);
+                this.user.annualFrequentation = jsonResponse.AnnualFrequentation;
+                this.user.panierMoyen = jsonResponse.PanierMoyen;
 
                 console.log(this.user);
 

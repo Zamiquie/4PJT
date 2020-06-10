@@ -1,9 +1,23 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>invoices</ion-title>
+  <ion-toolbar color="secondary">
+    <ion-title>Mes factures</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-card class="center fit-content" *ngIf="this.shoppingService.sales.length == 0">
+    <ion-card-content>
+      <ion-text>Vous n'avez aucunes factures</ion-text>
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-list class="top">
+    <ion-item *ngFor="let sale of this.shoppingService.sales">
+      <ion-label>{{sale.saleDate.toLocaleDateString()}}</ion-label>
+      <ion-label class="priceLabel">{{sale.totalAmount | number:'1.2-2'}}€</ion-label>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

@@ -1,0 +1,22 @@
+.top{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.center {
+  margin: auto;
+  top: 50%;
+  bottom:50%;
+  text-align: center;
+}
+
+.fit-content{
+  max-width: fit-content;
+}
+
+.priceLabel{
+  max-width: fit-content;
+  padding-right: 10px;
+}

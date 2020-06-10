@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="center" *ngIf="this.products.length == 0">
+  <ion-card class="center" *ngIf="this.shoppingService.products.length == 0">
     <ion-card-content>
       <ion-text>Votre panier est vide.</ion-text>
     </ion-card-content>
@@ -15,9 +15,9 @@
   <ion-list class="top">
     <ion-list-header lines="full">
       <ion-label class="title-font-size" color="primary">Listes des articles</ion-label>
-      <ion-icon id="trashIcon" color="danger" name="trash-outline"></ion-icon>
+      <ion-icon (click)="this.shoppingService.clearProducts()" id="trashIcon" color="danger" name="trash-outline"></ion-icon>
     </ion-list-header>
-    <ion-item *ngFor="let product of this.products">
+    <ion-item *ngFor="let product of this.shoppingService.products">
       <ion-label>{{product.product.designation}}</ion-label>
       <ion-label class="priceLabel">{{product.price| number:'1.2-2'}}€</ion-label>
       <ion-icon (click)="this.deleteOneProduct(product)" name="remove-circle-outline"></ion-icon>
@@ -32,9 +32,9 @@
 <ion-footer class="total-footer">
   <div class="footer-text center">
     <ion-text color="primary" >
-      Total : {{this.total | number:'1.2-2'}}€
+      Total : {{this.shoppingService.total | number:'1.2-2'}}€
     </ion-text>
   </div>
-  <ion-button size="small" class="addAndPayButton center" (click)="testProductList()">Ajouter</ion-button>
-  <ion-button size="small" class="addAndPayButton center">Payer</ion-button>
+  <ion-button size="small" class="addAndPayButton center" (click)="scanQRCode()">Ajouter</ion-button>
+  <ion-button size="small" class="addAndPayButton center" [disabled]="shoppingService.products.length == 0" (click)="this.shoppingService.pay()">Payer</ion-button>
 </ion-footer>

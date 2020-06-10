@@ -21,7 +21,7 @@
         <br>
         <ion-row>
           <ion-chip *ngIf="userService.user.name != null || userService.user.firstname != null " class="center-horizontal">
-            <ion-label class="large-text name">{{this.userService.user.name}} {{this.userService.user.firstname}}</ion-label>
+            <ion-label class="large-text name">{{this.userService.user.firstname}} {{this.userService.user.name}}</ion-label>
           </ion-chip>
         </ion-row>
       </ion-grid>
@@ -40,7 +40,7 @@
         <ion-row *ngIf="this.userService.user.adress!=null">
           <ion-label>
             {{this.userService.user.adress}} <br>
-            {{this.userService.user.city}}, {{this.userService.user.postalCode}}
+            {{this.userService.user.postalCode}}, {{this.userService.user.city}}
           </ion-label>
         </ion-row>
         <ion-row><br></ion-row>
@@ -52,7 +52,7 @@
   </ion-card>
 
 <!--  Modifcation du profil -->
-  <ion-card class="center" *ngIf="userService.modification == true">
+  <ion-card *ngIf="userService.modification == true">
     <ion-card-content>
       <ion-grid>
         <ion-row>

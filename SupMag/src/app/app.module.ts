@@ -10,6 +10,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {HttpClientModule} from "@angular/common/http";
 import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
+import {Uid} from "@ionic-native/uid/ngx";
+import {AndroidPermissions} from "@ionic-native/android-permissions/ngx";
+
 
 
 @NgModule({
@@ -26,7 +29,9 @@ import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
     StatusBar,
     SplashScreen,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-    BarcodeScanner
+    BarcodeScanner,
+    Uid,
+    AndroidPermissions
   ],
   exports: [
   ],

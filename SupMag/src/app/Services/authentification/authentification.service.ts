@@ -42,7 +42,8 @@ export class AuthentificationService {
                 this.userService.getUserProfileAndGoToCustomer();
             },
             error => {
-                console.log(error);
+                console.log(error.message);
+                this.apiService.errorPopup(error.message);
             }
         );
   }
@@ -63,7 +64,7 @@ export class AuthentificationService {
           Password: formData.password,
           Name: formData.name,
           FirstName: formData.firstname,
-          BirthDay: formData.birthday.toISOString(),
+          birthdayDay: formData.birthday.toISOString(),
           Adress: formData.adress,
           Postal_Code: formData.postalCode,
           City: formData.city,
@@ -74,6 +75,8 @@ export class AuthentificationService {
           AnnualFrequentation: 0,
           PanierMoyen: 0
       };
+
+      console.log(data);
 
       this.httpClient.post<User>(url,data,{headers: headers})
           .subscribe(
@@ -86,7 +89,7 @@ export class AuthentificationService {
                   this.userService.getUserProfileAndGoToCustomer();
               },
               error => {
-                  console.log(error);
+                  this.apiService.errorPopup(error);
               }
           );
 
